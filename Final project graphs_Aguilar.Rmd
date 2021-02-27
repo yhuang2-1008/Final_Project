@@ -5,48 +5,37 @@ date: "2/27/2021"
 output: html_document
 ---
 
-## R Markdown
-
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-```{r}
-library(tidyverse)     # for data cleaning and plotting
-library(lubridate)     # for date manipulation
-library(openintro)     # for the abbr2state() function
-library(maps)          # for map data
-library(ggmap)         # for mapping points on maps
-library(gplots)        # for col2hex() function
-library(RColorBrewer)  # for color palettes
-library(sf)            # for working with spatial data
-library(leaflet)       # for highly customizable mapping
-library(ggthemes)      # for more themes (including theme_map())
-library(plotly)        # for the ggplotly() - basic interactivity
-library(gganimate)     # for adding animation layers to ggplots
-library(transformr)    # for "tweening" (gganimate)
-library(gifski)        # need the library for creating gifs but don't need to load each time
-library(shiny)         # for creating interactive apps
+```{r, echo=FALSE}
+library(tidyverse)    
+library(lubridate)    
+library(openintro)     
+library(maps)          
+library(ggmap)         
+library(gplots)       
+library(RColorBrewer)  
+library(sf)            
+library(leaflet)       
+library(ggthemes)      
+library(plotly)        
+library(gganimate)    
+library(transformr)    
+library(gifski)        
+library(shiny)         
 library(ggimage)
 library(tidytuesdayR)
 theme_set(theme_minimal())
 ```
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-```{r}
+```{r,echo=FALSE}
 # College Tuition Data
 tuition_cost <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-03-10/tuition_cost.csv')
-```{r cars}
-summary(cars)
-```
 tuition_income <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-03-10/tuition_income.csv') 
 salary_potential <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-03-10/salary_potential.csv')
 ## Including Plots
 historical_tuition <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-03-10/historical_tuition.csv')
-You can also embed plots, for example:
-diversity_school <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-03-10/diversity_school.csv')
 ```
 
-```{r pressure, echo=FALSE}
-plot(pressure)
-```{r}
+```{r, echo=FALSE}
 # Wealth and Income Over Time
 lifetime_earn <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-02-09/lifetime_earn.csv')
 student_debt <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-02-09/student_debt.csv')
@@ -57,11 +46,30 @@ income_time <- readr::read_csv('https://raw.githubusercontent.com/rfordatascienc
 income_limits <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-02-09/income_limits.csv')
 income_aggregate <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-02-09/income_aggregate.csv')
 income_distribution <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-02-09/income_distribution.csv')
-income_mean <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-02-09/income_mean.csv'
+income_mean <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-02-09/income_mean.csv')
 ```
-
-
-
-
+```{r}
+race_wealth %>%   
+  filter(year >= "1989", race !="Non-White",type=="Median") %>% 
+  left_join(retirement, by =c("race","year")) %>% 
+  ggplot(aes(x= year,
+             y= retirement,
+             fill=race))+
+  geom_histogram(stat = "identity")+
+  geom_line(aes(y=wealth_family))+
+  scale_y_continuous(labels=scales::dollar_format())+
+  scale_fill_manual(values = c("#6941e1","#4169e1", "#41b9e1"))+
+  labs(title = "Average Family Liquid Retirement Savings from 1986-2016",
+       caption = "*Line represents median family wealth",
+       x="",
+       y="")+
+  theme(plot.title.position = "plot",
+        legend.position = "none",
+        panel.border = element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        axis.line = element_line(color = "black")) +
+  facet_wrap(vars(race))
+```
 
 
