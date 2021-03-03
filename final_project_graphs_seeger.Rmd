@@ -33,6 +33,7 @@ library(gifski)        # need the library for creating gifs but don't need to lo
 library(shiny)         # for creating interactive apps
 library(ggimage)
 library(tidytuesdayR)
+library(patchwork)
 theme_set(theme_minimal())
 ```
 
@@ -65,33 +66,20 @@ income_mean <- readr::read_csv('https://raw.githubusercontent.com/rfordatascienc
 
 
 ```{r}
-diversity_salary <- salary_potential %>% 
-  left_join(diversity_school, by = c("name")) %>% 
-  ggplot() +
-  geom_point(aes(x = total_enrollment, 
-                 y = stem_percent, 
-                 colour = early_career_pay),
-             size = 2,
-             alpha = 0.33) +
-  scale_color_gradient() +
-  labs(title = "STEM students and their projected early career salary",
-       subtitle = "State: {closest_state}",
-       x = "Total enrollment",
-       y = "Percent of STEM students",
-       color = "Early career salary") + 
-  theme_minimal() + 
-  transition_states(state,
-                    transition_length = 50,
-                    state_length = 60)
+debtplot <- student_debt %>%
+  ggplot(aes(x = year, y = loan_debt, fill = race)) + geom_area(alpha = 0.8) + labs(title = "Student loan debt by racial groups", x= "", y ="") + theme_fivethirtyeight() + facet_wrap(~ race)
 
-animate(diversity_salary,
-        duration = 500)
-anim_save("stem_early_career_pay.gif")
-diversity_salary
+
+compplot <- diversity_school %>%
+  filter(category %in% c("Black", "Hispanic", "White")) %>%
+  group_by(name, category) %>%
+  summarize(percent = enrollment/total_enrollment) %>%
+  ggplot(aes(x = category, y = percent, fill = category)) + geom_boxplot() + 
+  labs(title = "Average proportion of students based on racial group", x = "", y= "")
+
+
+debtplot/compplot
 ```
-
-
-
 
 
 
