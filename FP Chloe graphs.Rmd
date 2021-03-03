@@ -38,6 +38,7 @@ salary_potential <- readr::read_csv('https://raw.githubusercontent.com/rfordatas
 ## Including Plots
 historical_tuition <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-03-10/historical_tuition.csv')
 
+
 # Wealth and Income Over Time
 lifetime_earn <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-02-09/lifetime_earn.csv')
 student_debt <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-02-09/student_debt.csv')
@@ -50,4 +51,10 @@ income_aggregate <- readr::read_csv('https://raw.githubusercontent.com/rfordatas
 income_distribution <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-02-09/income_distribution.csv')
 income_mean <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-02-09/income_mean.csv')
 ```
+
+##graph showing tuition_cost (in_state_total and out_state_total) VS student_debt (loan_debt)
+
+
+
+
 
