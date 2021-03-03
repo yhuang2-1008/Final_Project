@@ -48,6 +48,8 @@ income_aggregate <- readr::read_csv('https://raw.githubusercontent.com/rfordatas
 income_distribution <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-02-09/income_distribution.csv')
 income_mean <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-02-09/income_mean.csv')
 ```
+
+
 ```{r}
 race_wealth %>%   
   filter(year >= "1989", race !="Non-White",type=="Median") %>% 
