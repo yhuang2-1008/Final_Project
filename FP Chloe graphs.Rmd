@@ -52,9 +52,12 @@ income_distribution <- readr::read_csv('https://raw.githubusercontent.com/rforda
 income_mean <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-02-09/income_mean.csv')
 ```
 
-##graph showing tuition_cost (in_state_total and out_state_total) VS student_debt (loan_debt)
+##graph showing tuition_cost (in_state_total and out_state_total) VS salary_potential (mid_career_pay) by state or uni
 
-
+```{r}
+tutition_cost %>% 
+  left_join(tuition_cost, by = c()) %>% 
+```
 
 
 
