@@ -55,8 +55,24 @@ income_mean <- readr::read_csv('https://raw.githubusercontent.com/rfordatascienc
 ##graph showing tuition_cost (in_state_total and out_state_total) VS salary_potential (mid_career_pay) by state or uni
 
 ```{r}
-tutition_cost %>% 
-  left_join(tuition_cost, by = c()) %>% 
+college_potential <- tuition_cost %>% 
+  mutate(state_name = state) %>% 
+  left_join(salary_potential, by = c("state_name", "name")) %>% 
+  group_by(state_name)
+  
+states_map <- map_data("state")
+
+college_potential %>%  
+  ggplot() +
+  geom_map(map = states_map,
+           aes(map_id = state_name,
+               fill = in_state_tuition)) +
+    expand_limits(x = states_map$long, y = states_map$lat) + 
+   scale_fill_viridis_c(option = "inferno") +
+    labs(title = "bihefjknc",
+       caption = "Author : bgrfvedc",
+       fill = "") +
+  theme_map() 
 ```
 
 
