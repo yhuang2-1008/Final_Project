@@ -89,7 +89,7 @@ compplot <- diversity_school %>%
              y = percent, 
              fill = category)) + 
   geom_boxplot() + 
-  labs(title = "Average proportion of students based on racial group", 
+  labs(title = "Average enrollment of students based on racial group", 
        x = "",
        y= "")
 

@@ -74,7 +74,7 @@ debt_retirement <- student_debt %>%
              fill=race)) +
   scale_y_continuous(labels=scales::dollar_format()) +
   scale_fill_manual(values = c("#40E0D0","#6495ED", "#9370DB")) +
-  labs(title = "Projected Average Retirement Savings Based on Student Loan Debt",
+  labs(title = "Average Retirement Savings Based on Student Loan Debt",
        x="",
        y="") +
   theme(plot.title.position = "plot",
