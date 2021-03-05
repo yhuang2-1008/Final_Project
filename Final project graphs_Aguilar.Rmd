@@ -57,7 +57,8 @@ race_wealth %>%
              fill=race))+
   geom_histogram(stat = "identity")+
   geom_line(aes(y=wealth_family))+
-  scale_y_continuous(labels=scales::dollar_format())+
+  scale_x_continuous(limits = c(1989,2017), expand = c(0, 0)) +
+  scale_y_continuous(limits = c(0,200000), expand = c(0, 0),labels=scales::dollar_format())+
   scale_fill_manual(values = c("#6941e1","#4169e1", "#41b9e1"))+
   labs(title = "Average Family Liquid Retirement Savings from 1986-2016",
        caption = "*Line represents median family wealth",
@@ -68,7 +69,8 @@ race_wealth %>%
         panel.border = element_blank(),
         panel.grid.major = element_blank(),
         panel.grid.minor = element_blank(),
-        axis.line = element_line(color = "black")) +
+        axis.line = element_line(color = "black"),
+        axis.ticks = element_line(color = 'black')) +
   facet_wrap(vars(race))
 ```
 
