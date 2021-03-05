@@ -67,22 +67,45 @@ income_mean <- readr::read_csv('https://raw.githubusercontent.com/rfordatascienc
 
 ```{r}
 debtplot <- student_debt %>%
-  ggplot(aes(x = year, y = loan_debt, fill = race)) + geom_area(alpha = 0.8) + labs(title = "Student loan debt by racial groups", x= "", y ="") + theme_fivethirtyeight() + facet_wrap(~ race)
+  ggplot(aes(x = year,
+             y = loan_debt, 
+             fill = race)) + 
+  geom_area(alpha = 0.8) +
+  labs(title = "Student loan debt by racial groups",
+       x= "",
+       y ="") + 
+  theme_fivethirtyeight() +
+  facet_wrap(~ race)
 
 
 compplot <- diversity_school %>%
-  filter(category %in% c("Black", "Hispanic", "White")) %>%
-  group_by(name, category) %>%
+  filter(category %in% c("Black", 
+                         "Hispanic", 
+                         "White")) %>%
+  group_by(name,
+           category) %>%
   summarize(percent = enrollment/total_enrollment) %>%
-  ggplot(aes(x = category, y = percent, fill = category)) + geom_boxplot() + 
-  labs(title = "Average proportion of students based on racial group", x = "", y= "")
+  ggplot(aes(x = category,
+             y = percent, 
+             fill = category)) + 
+  geom_boxplot() + 
+  labs(title = "Average proportion of students based on racial group", 
+       x = "",
+       y= "")
 
 
 debtplot/compplot
 ```
 
 
+```{r}
+home_owner %>%
+  ggplot(aes(x = year, y = home_owner_pct, color = race)) + geom_line()
+```
 
 
+```{r}
+lifetime_earn
+```
 
 
