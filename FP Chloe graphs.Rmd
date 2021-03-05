@@ -74,8 +74,23 @@ college_potential %>%
        fill = "") +
   facet_wrap(vars(type)) +
   theme_map() 
+  
 ```
 
 
 
+```{r}
+tuition <- tuition_cost %>% 
+ ggplot() +
+  geom_boxplot(aes(x = in_state_total, color = "blue")) +
+  geom_boxplot(aes(x = out_of_state_total, color = "red")) +
+  theme()
+
+debt <- student_debt %>% 
+  ggplot(aes(x = year, y = loan_debt)) +
+  geom_line() +
+  facet_wrap(~race)
+
+tuition/debt
+```
 
