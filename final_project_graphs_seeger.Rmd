@@ -100,7 +100,14 @@ debtplot/compplot
 
 ```{r}
 home_owner %>%
-  ggplot(aes(x = year, y = home_owner_pct, color = race)) + geom_line()
+  ggplot(aes(x = year,
+             y = home_owner_pct,
+             color = race)) +
+  geom_line() + 
+  theme_fivethirtyeight() + 
+  labs(title = "Homeownship by race", 
+       x = "",
+       y = "")
 ```
 
 

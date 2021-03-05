@@ -1,0 +1,20 @@
+---
+title: "Blog post template"
+author: "Cynthia Aguilar, Jennifer Huang, Chloe Nance, Kate Seeger"
+date: "3/5/2021"
+output: 
+  html_document:
+    toc: TRUE
+    toc_float: TRUE
+    df_print: paged
+    code_download: true
+    theme: journal
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# College and Income in the United States
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla tempus efficitur volutpat. Suspendisse sollicitudin ligula augue. Curabitur non eros elit. Nullam id odio vel eros facilisis rhoncus et a urna. Mauris tristique convallis felis laoreet pellentesque. Maecenas eget arcu venenatis, sollicitudin est in, pretium nulla. Sed feugiat, nibh sed laoreet mollis, dolor diam euismod turpis, at luctus massa risus vel sapien. Maecenas volutpat turpis sit amet sem faucibus ultricies. In urna nulla, dapibus nec congue et, facilisis nec nunc. Curabitur viverra, massa ac porta porta, neque neque sollicitudin sapien, et sollicitudin neque eros vel ligula. Pellentesque euismod metus quis augue ornare, vel egestas nunc iaculis. Aenean lacus leo, sollicitudin aliquet efficitur eu, molestie ac massa. In id maximus nibh. Vestibulum cursus tincidunt sem, eget fermentum libero laoreet molestie. Ut sed pellentesque mi. 
