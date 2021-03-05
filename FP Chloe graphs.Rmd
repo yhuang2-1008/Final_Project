@@ -58,7 +58,7 @@ income_mean <- readr::read_csv('https://raw.githubusercontent.com/rfordatascienc
 college_potential <- tuition_cost %>% 
   mutate(state_name = state) %>% 
   left_join(salary_potential, by = c("state_name", "name")) %>% 
-  group_by(state_name)
+  mutate(state_name = str_to_lower(state_name)) 
   
 states_map <- map_data("state")
 
@@ -69,11 +69,24 @@ college_potential %>%
                fill = in_state_tuition)) +
     expand_limits(x = states_map$long, y = states_map$lat) + 
    scale_fill_viridis_c(option = "inferno") +
-    labs(title = "bihefjknc",
-       caption = "Author : bgrfvedc",
+    labs(title = "Title blah",
+       caption = "Author : Chloe Nance",
        fill = "") +
+  facet_wrap(vars(type)) +
   theme_map() 
 ```
 
 
+```{r}
+college_potential <- tuition_cost %>% 
+  mutate(state_name = state) %>% 
+  left_join(salary_potential, by = c("state_name", "name")) %>% 
+  ggplot(aes(x = in_state_total, y = mid_career_pay, color = type)) +
+  geom_point() +
+    labs(title = "Title blah",
+       caption = "Author : Chloe Nance" ) +
+  theme() 
+
+college_potential
+```
 
