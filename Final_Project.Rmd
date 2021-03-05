@@ -92,9 +92,36 @@ diversity_salary
 
 
 
+```{r}
+race_wealth %>%  
+  filter(year >= "1989", race !="Non-White",type=="Median") %>% 
+  left_join(retirement, by =c("race","year")) %>% 
+  ggplot(aes(x= year,
+             y= retirement,
+             fill=race))+
+  geom_histogram(stat = "identity")+
+  geom_line(aes(y=wealth_family))+
+  scale_y_continuous(labels=scales::dollar_format())+
+  scale_fill_manual(values = c("#6941e1","#4169e1", "#41b9e1"))+
+  labs(title = "Average Family Liquid Retirement Savings from 1986-2016",
+       caption = "*Line represents median family wealth",
+       x="",
+       y="")+
+  theme(plot.title.position = "plot",
+        legend.position = "none",
+        panel.border = element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        axis.line = element_line(color = "black")) +
+  facet_wrap(vars(race))
+```
 
 
 
+```{r}
+debt_retirement <- student_debt %>%  
+  left_join(retirement, by =c("race","year"))
+```
 
 
 
