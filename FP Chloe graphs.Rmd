@@ -1,11 +1,15 @@
 ---
-title: "Working final project graphs_Aguilar"
-author: "Cynthia"
-date: "2/27/2021"
+title: "FP Chloe graphs"
+date: "3/3/2021"
 output: html_document
+theme: cerulean
 ---
 
-```{r, echo=FALSE}
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message=FALSE, warning=FALSE)
+```
+
+```{r libraries}
 library(tidyverse)    
 library(lubridate)    
 library(openintro)     
@@ -26,16 +30,15 @@ library(tidytuesdayR)
 theme_set(theme_minimal())
 ```
 
-```{r,echo=FALSE}
+```{r, echo=FALSE}
 # College Tuition Data
 tuition_cost <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-03-10/tuition_cost.csv')
 tuition_income <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-03-10/tuition_income.csv') 
 salary_potential <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-03-10/salary_potential.csv')
 ## Including Plots
 historical_tuition <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-03-10/historical_tuition.csv')
-```
 
-```{r, echo=FALSE}
+
 # Wealth and Income Over Time
 lifetime_earn <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-02-09/lifetime_earn.csv')
 student_debt <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-02-09/student_debt.csv')
@@ -49,31 +52,28 @@ income_distribution <- readr::read_csv('https://raw.githubusercontent.com/rforda
 income_mean <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-02-09/income_mean.csv')
 ```
 
+##graph showing tuition_cost (in_state_total and out_state_total) VS salary_potential (mid_career_pay) by state or uni
 
 ```{r}
-race_wealth %>%   
-  filter(year >= "1989", race !="Non-White",type=="Median") %>% 
-  left_join(retirement, by =c("race","year")) %>% 
-  ggplot(aes(x= year,
-             y= retirement,
-             fill=race))+
-  geom_histogram(stat = "identity")+
-  geom_line(aes(y=wealth_family))+
-  scale_x_continuous(limits = c(1989,2017), expand = c(0, 0)) +
-  scale_y_continuous(limits = c(0,200000), expand = c(0, 0),labels=scales::dollar_format())+
-  scale_fill_manual(values = c("#6941e1","#4169e1", "#41b9e1"))+
-  labs(title = "Average Family Liquid Retirement Savings from 1986-2016",
-       caption = "*Line represents median family wealth",
-       x="",
-       y="")+
-  theme(plot.title.position = "plot",
-        legend.position = "none",
-        panel.border = element_blank(),
-        panel.grid.major = element_blank(),
-        panel.grid.minor = element_blank(),
-        axis.line = element_line(color = "black"),
-        axis.ticks = element_line(color = 'black')) +
-  facet_wrap(vars(race))
+college_potential <- tuition_cost %>% 
+  mutate(state_name = state) %>% 
+  left_join(salary_potential, by = c("state_name", "name")) %>% 
+  group_by(state_name)
+  
+states_map <- map_data("state")
+
+college_potential %>%  
+  ggplot() +
+  geom_map(map = states_map,
+           aes(map_id = state_name,
+               fill = in_state_tuition)) +
+    expand_limits(x = states_map$long, y = states_map$lat) + 
+   scale_fill_viridis_c(option = "inferno") +
+    labs(title = "bihefjknc",
+       caption = "Author : bgrfvedc",
+       fill = "") +
+  theme_map() 
 ```
+
 
 
