@@ -1,0 +1,80 @@
+---
+title: "Blog post template"
+author: "Cynthia Aguilar, Jennifer Huang, Chloe Nance, Kate Seeger"
+date: "3/5/2021"
+output: 
+  html_document:
+    toc: TRUE
+    toc_float: TRUE
+    df_print: paged
+    code_download: true
+    theme: journal
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, echo = FALSE}
+library(tidyverse)    
+library(lubridate)    
+library(openintro)     
+library(maps)          
+library(ggmap)         
+library(gplots)       
+library(RColorBrewer)  
+library(sf)            
+library(leaflet)       
+library(ggthemes)      
+library(plotly)        
+library(gganimate)    
+library(transformr)    
+library(gifski)        
+library(shiny)         
+library(ggimage)
+library(tidytuesdayR)
+```
+
+```{r, echo=FALSE}
+# Wealth and Income Over Time
+lifetime_earn <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-02-09/lifetime_earn.csv')
+student_debt <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-02-09/student_debt.csv')
+retirement <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-02-09/retirement.csv')
+home_owner <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-02-09/home_owner.csv')
+race_wealth <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-02-09/race_wealth.csv')
+income_time <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-02-09/income_time.csv')
+income_limits <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-02-09/income_limits.csv')
+income_aggregate <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-02-09/income_aggregate.csv')
+income_distribution <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-02-09/income_distribution.csv')
+income_mean <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-02-09/income_mean.csv')
+```
+
+# Debt in the United States
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla tempus efficitur volutpat. Suspendisse sollicitudin ligula augue. Curabitur non eros elit. Nullam id odio vel eros facilisis rhoncus et a urna. Mauris tristique convallis felis laoreet pellentesque. Maecenas eget arcu venenatis, sollicitudin est in, pretium nulla. Sed feugiat, nibh sed laoreet mollis, dolor diam euismod turpis, at luctus massa risus vel sapien. Maecenas volutpat turpis sit amet sem faucibus ultricies. In urna nulla, dapibus nec congue et, facilisis nec nunc. Curabitur viverra, massa ac porta porta, neque neque sollicitudin sapien, et sollicitudin neque eros vel ligula. Pellentesque euismod metus quis augue ornare, vel egestas nunc iaculis. Aenean lacus leo, sollicitudin aliquet efficitur eu, molestie ac massa. In id maximus nibh. Vestibulum cursus tincidunt sem, eget fermentum libero laoreet molestie. Ut sed pellentesque mi. 
+
+```{r, echo=FALSE}
+race_wealth %>%   
+  filter(year >= "1989", race !="Non-White",type=="Median") %>% 
+  left_join(retirement, by =c("race","year")) %>% 
+  ggplot(aes(x= year,
+             y= retirement,
+             fill=race))+
+  geom_histogram(stat = "identity")+
+  geom_line(aes(y=wealth_family))+
+  scale_x_continuous(limits = c(1989,2017), expand = c(0, 0)) +
+  scale_y_continuous(limits = c(0,200000), expand = c(0, 0),labels=scales::dollar_format())+
+  scale_fill_manual(values = c("#6941e1","#4169e1", "#41b9e1"))+
+  labs(title = "Average Family Liquid Retirement Savings from 1986-2016",
+       caption = "*Line represents median family wealth",
+       x="",
+       y="")+
+  theme(plot.title.position = "plot",
+        legend.position = "none",
+        panel.border = element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        axis.line = element_line(color = "black"),
+        axis.ticks = element_line(color = 'black')) +
+  facet_wrap(vars(race))
+```

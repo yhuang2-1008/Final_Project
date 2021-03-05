@@ -74,7 +74,7 @@ debt_retirement <- student_debt %>%
              fill=race)) +
   scale_y_continuous(labels=scales::dollar_format()) +
   scale_fill_manual(values = c("#40E0D0","#6495ED", "#9370DB")) +
-  labs(title = "Projected Average Retirement Savings Based on Student Loan Debt",
+  labs(title = "Average Retirement Savings Based on Student Loan Debt",
        x="",
        y="") +
   theme(plot.title.position = "plot",
@@ -88,5 +88,5 @@ debt_retirement <- student_debt %>%
 debt_retirement
 ```
 
-
+* Referring to Kate's patchwork graphs on student loan debt and enrollment based on racial groups, this graph shows that even though White students have a higher enrollment rate and have roughly the same amount of student loan debt, they nonetheless have significantly higher retirement savings. This is likely due to the wage gap in racial groups and the employment rate for people of color in higher paying positions. 
 
