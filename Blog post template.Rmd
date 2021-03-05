@@ -64,37 +64,8 @@ income_mean <- readr::read_csv('https://raw.githubusercontent.com/rfordatascienc
 
 Vivamus eu sem quis massa finibus egestas. Pellentesque nec arcu hendrerit sem accumsan aliquam accumsan sed tortor. Sed quis dui sed lacus pulvinar laoreet vitae nec nulla. Suspendisse et augue et mi suscipit bibendum non eu erat. Sed pulvinar, mi id convallis hendrerit, orci metus venenatis est, sed iaculis elit orci nec diam. Suspendisse auctor metus non purus tincidunt eleifend. Aliquam bibendum justo risus, sit amet molestie tortor vestibulum vel. 
 
-## Heading
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla tempus efficitur volutpat. Suspendisse sollicitudin ligula augue. Curabitur non eros elit. Nullam id odio vel eros facilisis rhoncus et a urna. Mauris tristique convallis felis laoreet pellentesque. Maecenas eget arcu venenatis, sollicitudin est in, pretium nulla. Sed feugiat, nibh sed laoreet mollis, dolor diam euismod turpis, at luctus massa risus vel sapien. Maecenas volutpat turpis sit amet sem faucibus ultricies. In urna nulla, dapibus nec congue et, facilisis nec nunc. Curabitur viverra, massa ac porta porta, neque neque sollicitudin sapien, et sollicitudin neque eros vel ligula. Pellentesque euismod metus quis augue ornare, vel egestas nunc iaculis. Aenean lacus leo, sollicitudin aliquet efficitur eu, molestie ac massa. In id maximus nibh. Vestibulum cursus tincidunt sem, eget fermentum libero laoreet molestie. Ut sed pellentesque mi. 
-
-```{r, echo=FALSE}
-race_wealth %>%   
-  filter(year >= "1989", race !="Non-White",type=="Median") %>% 
-  left_join(retirement, by =c("race","year")) %>% 
-  ggplot(aes(x= year,
-             y= retirement,
-             fill=race))+
-  geom_histogram(stat = "identity")+
-  geom_line(aes(y=wealth_family))+
-  scale_x_continuous(limits = c(1989,2017), expand = c(0, 0)) +
-  scale_y_continuous(limits = c(0,200000), expand = c(0, 0),labels=scales::dollar_format())+
-  scale_fill_manual(values = c("#6941e1","#4169e1", "#41b9e1"))+
-  labs(title = "Average Family Liquid Retirement Savings from 1986-2016",
-       caption = "*Line represents median family wealth",
-       x="",
-       y="")+
-  theme(plot.title.position = "plot",
-        legend.position = "none",
-        panel.border = element_blank(),
-        panel.grid.major = element_blank(),
-        panel.grid.minor = element_blank(),
-        axis.line = element_line(color = "black"),
-        axis.ticks = element_line(color = 'black')) +
-  facet_wrap(vars(race))
-```
-
-## Heading
+## First Heading
 Nulla urna enim, semper ac tortor sit amet, maximus malesuada enim. Nam aliquam leo ac nunc molestie, eget porttitor diam pretium. Morbi eleifend vulputate mi, id ultrices sapien sagittis ac. Suspendisse potenti. Suspendisse tempor mauris in libero tincidunt, ac tempus eros accumsan. Morbi id eros arcu. Nam eu dui malesuada, egestas nunc vel, rhoncus purus. Curabitur non ligula id nisi tincidunt dictum at id nisl. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aliquam tempus ligula ligula, vitae elementum lectus viverra vel. In eleifend at nibh nec lobortis. Suspendisse vitae tempor dolor, ac porttitor risus. Mauris convallis luctus elit. Morbi suscipit leo et massa ultrices rhoncus. Morbi nec rhoncus sapien. 
 
 ```{r, echo = FALSE}
@@ -128,3 +99,80 @@ compplot <- diversity_school %>%
 
 debtplot/compplot
 ```
+
+Proin sed dignissim ex. Pellentesque volutpat rutrum nisl, quis faucibus nibh maximus sed. Praesent non nisl id velit euismod vulputate in sit amet mauris. Donec vitae nisi eu magna tempor iaculis. Praesent placerat enim quis pulvinar cursus. Vestibulum malesuada magna felis, eget ullamcorper ante maximus pretium. Ut a hendrerit mi. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Donec fermentum nisl vitae diam vulputate ullamcorper. Aliquam eu augue placerat, placerat augue quis, aliquet mi. Donec tristique, enim a mattis finibus, massa ipsum gravida magna, id pellentesque velit nulla eu nibh. Aliquam neque purus, bibendum vel fringilla vel, commodo quis ex. Duis sit amet diam turpis. Duis imperdiet metus dignissim, luctus nisl ornare, malesuada ex. Nulla convallis mi eu ex fringilla porta. 
+
+```{r, echo=FALSE}
+debt_retirement <- student_debt %>%  
+  left_join(retirement, by =c("race","year")) %>% 
+  ggplot() +
+  geom_boxplot(aes(x= loan_debt,
+             y= retirement,
+             fill=race)) +
+  scale_y_continuous(labels=scales::dollar_format()) +
+  scale_fill_manual(values = c("#40E0D0","#6495ED", "#9370DB")) +
+  labs(title = "Average Retirement Savings Based on Student Loan Debt",
+       x="",
+       y="") +
+  theme(plot.title.position = "plot",
+        legend.position = "none",
+        panel.border = element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        axis.line = element_line(color = "black")) +
+  facet_wrap(vars(race))
+
+debt_retirement
+```
+
+## Second Heading
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla tempus efficitur volutpat. Suspendisse sollicitudin ligula augue. Curabitur non eros elit. Nullam id odio vel eros facilisis rhoncus et a urna. Mauris tristique convallis felis laoreet pellentesque. Maecenas eget arcu venenatis, sollicitudin est in, pretium nulla. Sed feugiat, nibh sed laoreet mollis, dolor diam euismod turpis, at luctus massa risus vel sapien. Maecenas volutpat turpis sit amet sem faucibus ultricies. In urna nulla, dapibus nec congue et, facilisis nec nunc. Curabitur viverra, massa ac porta porta, neque neque sollicitudin sapien, et sollicitudin neque eros vel ligula. Pellentesque euismod metus quis augue ornare, vel egestas nunc iaculis. Aenean lacus leo, sollicitudin aliquet efficitur eu, molestie ac massa. In id maximus nibh. Vestibulum cursus tincidunt sem, eget fermentum libero laoreet molestie. Ut sed pellentesque mi. 
+
+```{r, echo=FALSE}
+race_wealth %>%   
+  filter(year >= "1989", race !="Non-White",type=="Median") %>% 
+  left_join(retirement, by =c("race","year")) %>% 
+  ggplot(aes(x= year,
+             y= retirement,
+             fill=race))+
+  geom_histogram(stat = "identity")+
+  geom_line(aes(y=wealth_family))+
+  scale_x_continuous(limits = c(1989,2017), expand = c(0, 0)) +
+  scale_y_continuous(limits = c(0,200000), expand = c(0, 0),labels=scales::dollar_format())+
+  scale_fill_manual(values = c("#6941e1","#4169e1", "#41b9e1"))+
+  labs(title = "Average Family Liquid Retirement Savings from 1986-2016",
+       caption = "*Line represents median family wealth",
+       x="",
+       y="")+
+  theme(plot.title.position = "plot",
+        legend.position = "none",
+        panel.border = element_blank(),
+        panel.grid.major = element_blank(),
+        panel.grid.minor = element_blank(),
+        axis.line = element_line(color = "black"),
+        axis.ticks = element_line(color = 'black')) +
+  facet_wrap(vars(race))
+```
+
+Donec ullamcorper, mi vel hendrerit lacinia, mauris elit malesuada est, vitae tincidunt sem mi vel velit. Cras eu nulla id felis mollis tincidunt. Nullam nulla neque, mollis eu condimentum sed, pellentesque quis urna. Aenean blandit massa ut varius vestibulum. Aenean dictum eros id risus tristique, quis congue sapien porta. Fusce euismod felis nec pretium iaculis. Phasellus id elit sed nunc pulvinar tempor. Suspendisse potenti.
+
+Sed id nisi arcu. Vivamus viverra rutrum libero, sed dictum leo consectetur sit amet. Ut blandit tristique purus id convallis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Sed imperdiet ante in diam hendrerit varius. Mauris tincidunt orci libero, in bibendum lacus iaculis sit amet. Ut feugiat felis id imperdiet lobortis. Donec eu laoreet ex, ac ultricies erat. Vestibulum ante nulla, convallis ac metus sit amet, posuere fringilla sapien. 
+
+```{r, echo=FALSE}
+tuition <- tuition_cost %>% 
+ ggplot() +
+  geom_density(aes(x = in_state_total, fill = "blue")) +
+  geom_density(aes(x = out_of_state_total, fill = "red")) +
+  theme()
+
+debt <- student_debt %>% 
+  ggplot(aes(x = year, y = loan_debt)) +
+  geom_line() +
+  facet_wrap(~race)
+
+tuition/debt
+```
+Quisque ultricies scelerisque turpis, vitae fringilla mauris condimentum quis. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Pellentesque sodales vulputate ultrices. Maecenas dapibus, sem interdum ornare tempor, risus ligula pulvinar lectus, eget rutrum nulla diam a velit. Phasellus ac iaculis ligula, a convallis tortor. Donec pharetra dui sit amet ex commodo dapibus. Morbi eget laoreet erat. Morbi purus magna, blandit sit amet placerat vitae, aliquet id lectus. Aliquam ultrices magna lectus, vel vestibulum magna luctus non. Suspendisse eu ante at augue ornare porttitor. Sed facilisis, magna venenatis hendrerit molestie, nisl massa iaculis lorem, ac pretium est lectus lacinia risus.
+
+Sed feugiat lacus nec neque mollis semper. Proin euismod ut diam vitae tristique. Nam varius venenatis dolor, at tristique ligula tincidunt vitae. Nullam cursus sagittis tortor at viverra. Sed vel varius diam, eu consectetur quam. Duis ac blandit lorem. Aenean urna enim, dignissim nec lacinia nec, commodo sit amet ante. Suspendisse fringilla sapien non enim vulputate, et posuere turpis fringilla. Donec vel nunc suscipit, rhoncus nulla vitae, consectetur ex. Fusce ornare sit amet leo ut aliquet. 
