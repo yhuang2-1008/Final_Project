@@ -77,16 +77,5 @@ college_potential %>%
 ```
 
 
-```{r}
-college_potential <- tuition_cost %>% 
-  mutate(state_name = state) %>% 
-  left_join(salary_potential, by = c("state_name", "name")) %>% 
-  ggplot(aes(x = in_state_total, y = mid_career_pay, color = type)) +
-  geom_point() +
-    labs(title = "Title blah",
-       caption = "Author : Chloe Nance" ) +
-  theme() 
 
-college_potential
-```
 
