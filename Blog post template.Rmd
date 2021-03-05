@@ -12,7 +12,7 @@ output:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE, message=FALSE, warning=FALSE)
 ```
 
 ```{r, echo = FALSE}
@@ -33,9 +33,22 @@ library(gifski)
 library(shiny)         
 library(ggimage)
 library(tidytuesdayR)
+library(patchwork)
 ```
 
 ```{r, echo=FALSE}
+# College Tuition Data
+tuition_cost <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-03-10/tuition_cost.csv')
+
+tuition_income <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-03-10/tuition_income.csv') 
+
+salary_potential <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-03-10/salary_potential.csv')
+
+historical_tuition <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-03-10/historical_tuition.csv')
+
+diversity_school <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-03-10/diversity_school.csv')
+
+
 # Wealth and Income Over Time
 lifetime_earn <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-02-09/lifetime_earn.csv')
 student_debt <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-02-09/student_debt.csv')
@@ -49,7 +62,9 @@ income_distribution <- readr::read_csv('https://raw.githubusercontent.com/rforda
 income_mean <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-02-09/income_mean.csv')
 ```
 
-# Debt in the United States
+Vivamus eu sem quis massa finibus egestas. Pellentesque nec arcu hendrerit sem accumsan aliquam accumsan sed tortor. Sed quis dui sed lacus pulvinar laoreet vitae nec nulla. Suspendisse et augue et mi suscipit bibendum non eu erat. Sed pulvinar, mi id convallis hendrerit, orci metus venenatis est, sed iaculis elit orci nec diam. Suspendisse auctor metus non purus tincidunt eleifend. Aliquam bibendum justo risus, sit amet molestie tortor vestibulum vel. 
+
+## Heading
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla tempus efficitur volutpat. Suspendisse sollicitudin ligula augue. Curabitur non eros elit. Nullam id odio vel eros facilisis rhoncus et a urna. Mauris tristique convallis felis laoreet pellentesque. Maecenas eget arcu venenatis, sollicitudin est in, pretium nulla. Sed feugiat, nibh sed laoreet mollis, dolor diam euismod turpis, at luctus massa risus vel sapien. Maecenas volutpat turpis sit amet sem faucibus ultricies. In urna nulla, dapibus nec congue et, facilisis nec nunc. Curabitur viverra, massa ac porta porta, neque neque sollicitudin sapien, et sollicitudin neque eros vel ligula. Pellentesque euismod metus quis augue ornare, vel egestas nunc iaculis. Aenean lacus leo, sollicitudin aliquet efficitur eu, molestie ac massa. In id maximus nibh. Vestibulum cursus tincidunt sem, eget fermentum libero laoreet molestie. Ut sed pellentesque mi. 
 
@@ -77,4 +92,39 @@ race_wealth %>%
         axis.line = element_line(color = "black"),
         axis.ticks = element_line(color = 'black')) +
   facet_wrap(vars(race))
+```
+
+## Heading
+Nulla urna enim, semper ac tortor sit amet, maximus malesuada enim. Nam aliquam leo ac nunc molestie, eget porttitor diam pretium. Morbi eleifend vulputate mi, id ultrices sapien sagittis ac. Suspendisse potenti. Suspendisse tempor mauris in libero tincidunt, ac tempus eros accumsan. Morbi id eros arcu. Nam eu dui malesuada, egestas nunc vel, rhoncus purus. Curabitur non ligula id nisi tincidunt dictum at id nisl. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aliquam tempus ligula ligula, vitae elementum lectus viverra vel. In eleifend at nibh nec lobortis. Suspendisse vitae tempor dolor, ac porttitor risus. Mauris convallis luctus elit. Morbi suscipit leo et massa ultrices rhoncus. Morbi nec rhoncus sapien. 
+
+```{r, echo = FALSE}
+debtplot <- student_debt %>%
+  ggplot(aes(x = year,
+             y = loan_debt, 
+             fill = race)) + 
+  geom_area(alpha = 0.8) +
+  labs(title = "Student loan debt by racial groups",
+       x= "",
+       y ="") + 
+  theme_fivethirtyeight() +
+  facet_wrap(~ race)
+
+
+compplot <- diversity_school %>%
+  filter(category %in% c("Black", 
+                         "Hispanic", 
+                         "White")) %>%
+  group_by(name,
+           category) %>%
+  summarize(percent = enrollment/total_enrollment) %>%
+  ggplot(aes(x = category,
+             y = percent, 
+             fill = category)) + 
+  geom_boxplot() + 
+  labs(title = "Average enrollment of students based on racial group", 
+       x = "",
+       y= "")
+
+
+debtplot/compplot
 ```
