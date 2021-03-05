@@ -74,19 +74,23 @@ college_potential %>%
        fill = "") +
   facet_wrap(vars(type)) +
   theme_map() 
+  
 ```
 
 
-```{r}
-college_potential <- tuition_cost %>% 
-  mutate(state_name = state) %>% 
-  left_join(salary_potential, by = c("state_name", "name")) %>% 
-  ggplot(aes(x = in_state_total, y = mid_career_pay, color = type)) +
-  geom_point() +
-    labs(title = "Title blah",
-       caption = "Author : Chloe Nance" ) +
-  theme() 
 
-college_potential
+```{r}
+tuition <- tuition_cost %>% 
+ ggplot() +
+  geom_boxplot(aes(x = in_state_total, color = "blue")) +
+  geom_boxplot(aes(x = out_of_state_total, color = "red")) +
+  theme()
+
+debt <- student_debt %>% 
+  ggplot(aes(x = year, y = loan_debt)) +
+  geom_line() +
+  facet_wrap(~race)
+
+tuition/debt
 ```
 
