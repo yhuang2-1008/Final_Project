@@ -1,6 +1,6 @@
 ---
-title: 'Final Project'
-author: "Kate Seeger, Cynthia Aguilar, Jennifer Huang, Chloe Nance"
+title: 'Graphs from Jennifer'
+author: "Jen"
 output: 
   html_document:
     keep_md: TRUE
@@ -61,59 +61,6 @@ income_limits <- readr::read_csv('https://raw.githubusercontent.com/rfordatascie
 income_aggregate <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-02-09/income_aggregate.csv')
 income_distribution <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-02-09/income_distribution.csv')
 income_mean <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-02-09/income_mean.csv')
-```
-
-
-```{r}
-diversity_salary <- salary_potential %>% 
-  left_join(diversity_school, by = c("name")) %>% 
-  ggplot() +
-  geom_point(aes(x = total_enrollment, 
-                 y = stem_percent, 
-                 colour = early_career_pay),
-             size = 2,
-             alpha = 0.33) +
-  scale_color_gradient() +
-  labs(title = "STEM students and their projected early career salary",
-       subtitle = "State: {closest_state}",
-       x = "Total enrollment",
-       y = "Percent of STEM students",
-       color = "Early career salary") + 
-  theme_minimal() + 
-  transition_states(state,
-                    transition_length = 50,
-                    state_length = 60)
-
-animate(diversity_salary,
-        duration = 500)
-anim_save("stem_early_career_pay.gif")
-diversity_salary
-```
-
-
-
-```{r}
-race_wealth %>%  
-  filter(year >= "1989", race !="Non-White",type=="Median") %>% 
-  left_join(retirement, by =c("race","year")) %>% 
-  ggplot(aes(x= year,
-             y= retirement,
-             fill=race))+
-  geom_histogram(stat = "identity")+
-  geom_line(aes(y=wealth_family))+
-  scale_y_continuous(labels=scales::dollar_format())+
-  scale_fill_manual(values = c("#6941e1","#4169e1", "#41b9e1"))+
-  labs(title = "Average Family Liquid Retirement Savings from 1986-2016",
-       caption = "*Line represents median family wealth",
-       x="",
-       y="")+
-  theme(plot.title.position = "plot",
-        legend.position = "none",
-        panel.border = element_blank(),
-        panel.grid.major = element_blank(),
-        panel.grid.minor = element_blank(),
-        axis.line = element_line(color = "black")) +
-  facet_wrap(vars(race))
 ```
 
 
