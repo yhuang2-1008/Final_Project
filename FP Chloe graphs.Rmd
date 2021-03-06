@@ -27,6 +27,7 @@ library(gifski)
 library(shiny)         
 library(ggimage)
 library(tidytuesdayR)
+library(scales)
 theme_set(theme_minimal())
 ```
 
@@ -109,7 +110,7 @@ diversity_school %>%
            aes(map_id = state,
                fill = enrollment)) +
     expand_limits(x = states_map$long, y = states_map$lat) + 
-   scale_fill_viridis_c(option = "inferno") +
+   scale_fill_viridis_c(option = "inferno", labels = comma) +
     labs(title = "Diversity enrollment in US colleges",
        caption = "Author : Chloe Nance",
        fill = "Enrollment") +
