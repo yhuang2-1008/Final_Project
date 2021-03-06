@@ -105,7 +105,7 @@ home_owner %>%
              color = race)) +
   geom_line() + 
   theme_fivethirtyeight() + 
-  labs(title = "Homeownship by race", 
+  labs(title = "Homeownership by race", 
        x = "",
        y = "")
 ```
