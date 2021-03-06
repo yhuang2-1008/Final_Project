@@ -111,8 +111,5 @@ home_owner %>%
 ```
 
 
-```{r}
-lifetime_earn
-```
 
 
