@@ -27,7 +27,6 @@ library(gifski)
 library(shiny)         
 library(ggimage)
 library(tidytuesdayR)
-library(scales)
 theme_set(theme_minimal())
 ```
 
@@ -63,11 +62,11 @@ tuition <- tuition_cost %>%
   geom_density(aes(x = out_of_state_total, fill = "red")) +
   theme()
 
-
 debt <- student_debt %>% 
   ggplot(aes(x = year, y = loan_debt)) +
+  scale_y_continuous(labels=scales::dollar_format()) +
   geom_line() +
-  facet_wrap(~race)
+  facet_wrap(~race) 
 
 
 tuition/debt
@@ -77,6 +76,8 @@ tuition/debt
 ```{r}
 states_map <- map_data("state")
 
+options(scipen=10000)
+
 diversity_school %>%
   mutate(state = str_to_lower(state)) %>% 
   group_by(state) %>% 
@@ -85,7 +86,7 @@ diversity_school %>%
            aes(map_id = state,
                fill = enrollment)) +
     expand_limits(x = states_map$long, y = states_map$lat) + 
-   scale_fill_viridis_c(option = "inferno", labels = comma) +
+   scale_fill_viridis_c(option = "inferno") +
     labs(title = "Diversity enrollment in US colleges",
        caption = "Author : Chloe Nance",
        fill = "Enrollment") +
