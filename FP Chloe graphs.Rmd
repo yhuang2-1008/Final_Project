@@ -53,23 +53,71 @@ income_distribution <- readr::read_csv('https://raw.githubusercontent.com/rforda
 income_mean <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-02-09/income_mean.csv')
 ```
 
+```{r}
+states_map <- map_data("state")
+
+tuition_cost %>%
+  mutate(state = str_to_lower(state)) %>%
+  mutate(in_state_avg = in_state_total/n()) %>% 
+  ggplot() +
+  geom_map(map = states_map,
+           aes(map_id = state,
+               fill = in_state_avg)) +
+    expand_limits(x = states_map$long, y = states_map$lat) + 
+   scale_fill_viridis_c(option = "inferno") +
+    labs(title = "Title",
+       caption = "Author : Chloe Nance") +
+  theme_map() +
+  theme()
+```
+```{r}
+tuition_cost %>% 
+  filter(type %in% c("Private", "Public")) %>% 
+  ggplot(aes(y = in_state_total, fill = type)) +
+  scale_y_continuous(labels=scales::dollar_format()) +
+  geom_histogram() +
+  labs(title = "Range of In State Tuition",
+       caption = "Author : Chloe Nance",
+       x ="",
+       y ="") +
+   theme(plot.title = element_text(face = "bold", hjust = .5, size = 15),
+        plot.caption = element_text(face = "bold", size = 9),
+        legend.title = element_text(face = "bold"),
+        axis.text = element_text(color = "black", face = "italic"))
+```
+```{r}
+tuition_cost %>% 
+  filter(type %in% c("Private", "Public")) %>% 
+  ggplot(aes(y = out_of_state_total, fill = type)) +
+  scale_y_continuous(labels=scales::dollar_format()) +
+  geom_histogram() +
+  labs(title = "Range of Out of State Tuition",
+       caption = "Author : Chloe Nance",
+       x ="",
+       y ="") +
+   theme(plot.title = element_text(face = "bold", hjust = .5, size = 15),
+        plot.caption = element_text(face = "bold", size = 9),
+        legend.title = element_text(face = "bold"),
+        axis.text = element_text(color = "black", face = "italic"))
+```
 
 
 ```{r}
-tuition <- tuition_cost %>% 
- ggplot() +
-  geom_density(aes(x = in_state_total, fill = "blue")) +
-  geom_density(aes(x = out_of_state_total, fill = "red")) +
-  theme()
-
 debt <- student_debt %>% 
   ggplot(aes(x = year, y = loan_debt)) +
   scale_y_continuous(labels=scales::dollar_format()) +
   geom_line() +
-  facet_wrap(~race) 
+  labs(title = "Student loan debt per racial group",
+       caption = "Author : Chloe Nance",
+       x ="",
+       y ="") +
+  facet_wrap(~race) +
+    theme(plot.title = element_text(face = "bold", hjust = .5, size = 15),
+        plot.caption = element_text(face = "bold", size = 9),
+        legend.title = element_text(face = "bold"),
+        axis.text = element_text(color = "black", face = "italic"))
 
-
-tuition/debt
+debt
 ```
 
 
@@ -99,8 +147,3 @@ diversity_school %>%
         legend.box.margin = margin(6, 6, 6, 6),
         legend.position = "right")
 ```
-
-```{r}
-historical_tuition 
-```
-
