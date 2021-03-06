@@ -35,6 +35,7 @@ theme_set(theme_minimal())
 tuition_cost <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-03-10/tuition_cost.csv')
 tuition_income <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-03-10/tuition_income.csv') 
 salary_potential <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-03-10/salary_potential.csv')
+diversity_school <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-03-10/diversity_school.csv')
 ## Including Plots
 historical_tuition <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-03-10/historical_tuition.csv')
 
@@ -74,7 +75,7 @@ college_potential %>%
        fill = "") +
   facet_wrap(vars(type)) +
   theme_map() 
-  
+  #many dif entries but just showing latest one, would need animation to show all the dif types
 ```
 
 
@@ -86,11 +87,43 @@ tuition <- tuition_cost %>%
   geom_density(aes(x = out_of_state_total, fill = "red")) +
   theme()
 
+
 debt <- student_debt %>% 
   ggplot(aes(x = year, y = loan_debt)) +
   geom_line() +
   facet_wrap(~race)
 
+
 tuition/debt
+```
+
+
+```{r}
+states_map <- map_data("state")
+
+diversity_school %>%
+  mutate(state = str_to_lower(state)) %>% 
+  group_by(state) %>% 
+  ggplot() +
+  geom_map(map = states_map,
+           aes(map_id = state,
+               fill = enrollment)) +
+    expand_limits(x = states_map$long, y = states_map$lat) + 
+   scale_fill_viridis_c(option = "inferno") +
+    labs(title = "Diversity enrollment in US colleges",
+       caption = "Author : Chloe Nance",
+       fill = "Enrollment") +
+  facet_wrap(~category) +
+  theme_map() +
+  theme(plot.title = element_text(face = "bold", hjust = .5, size = 15),
+        plot.caption = element_text(face = "bold", size = 9),
+        legend.title = element_text(face = "bold"),
+        legend.box.background = element_rect(),
+        legend.box.margin = margin(6, 6, 6, 6),
+        legend.position = "right")
+```
+
+```{r}
+historical_tuition 
 ```
 
