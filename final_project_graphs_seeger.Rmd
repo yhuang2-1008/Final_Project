@@ -94,7 +94,6 @@ compplot <- diversity_school %>%
        y= "") + 
   theme_fivethirtyeight()
 
-
 debtplot/compplot
 ```
 
