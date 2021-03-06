@@ -62,11 +62,8 @@ income_distribution <- readr::read_csv('https://raw.githubusercontent.com/rforda
 income_mean <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-02-09/income_mean.csv')
 ```
 
-Vivamus eu sem quis massa finibus egestas. Pellentesque nec arcu hendrerit sem accumsan aliquam accumsan sed tortor. Sed quis dui sed lacus pulvinar laoreet vitae nec nulla. Suspendisse et augue et mi suscipit bibendum non eu erat. Sed pulvinar, mi id convallis hendrerit, orci metus venenatis est, sed iaculis elit orci nec diam. Suspendisse auctor metus non purus tincidunt eleifend. Aliquam bibendum justo risus, sit amet molestie tortor vestibulum vel. 
-
 
 ## First Heading
-Nulla urna enim, semper ac tortor sit amet, maximus malesuada enim. Nam aliquam leo ac nunc molestie, eget porttitor diam pretium. Morbi eleifend vulputate mi, id ultrices sapien sagittis ac. Suspendisse potenti. Suspendisse tempor mauris in libero tincidunt, ac tempus eros accumsan. Morbi id eros arcu. Nam eu dui malesuada, egestas nunc vel, rhoncus purus. Curabitur non ligula id nisi tincidunt dictum at id nisl. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aliquam tempus ligula ligula, vitae elementum lectus viverra vel. In eleifend at nibh nec lobortis. Suspendisse vitae tempor dolor, ac porttitor risus. Mauris convallis luctus elit. Morbi suscipit leo et massa ultrices rhoncus. Morbi nec rhoncus sapien. 
 
 ```{r, echo = FALSE}
 debtplot <- student_debt %>%
@@ -174,5 +171,26 @@ debt <- student_debt %>%
 tuition/debt
 ```
 Quisque ultricies scelerisque turpis, vitae fringilla mauris condimentum quis. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Pellentesque sodales vulputate ultrices. Maecenas dapibus, sem interdum ornare tempor, risus ligula pulvinar lectus, eget rutrum nulla diam a velit. Phasellus ac iaculis ligula, a convallis tortor. Donec pharetra dui sit amet ex commodo dapibus. Morbi eget laoreet erat. Morbi purus magna, blandit sit amet placerat vitae, aliquet id lectus. Aliquam ultrices magna lectus, vel vestibulum magna luctus non. Suspendisse eu ante at augue ornare porttitor. Sed facilisis, magna venenatis hendrerit molestie, nisl massa iaculis lorem, ac pretium est lectus lacinia risus.
+
+
+```{r}
+income_time_limits <- income_time %>%  
+  left_join(income_limits, by =c("year")) %>% 
+  filter(race != "All Races",
+         race != "Asian Alone",
+         race != "Asian Alone or in Combination") %>% 
+  mutate(ordered_quintile = fct_infreq(income_quintile)) %>% 
+  ggplot() +
+  geom_boxplot(aes(x = ordered_quintile,
+             y = income_dollars,
+             fill = race)) +
+  #scale_y_continuous(labels=scales::dollar_format()) +
+  #scale_fill_manual(values = c("#40E0D0","#6495ED", "#9370DB")) +
+  labs(title = "Title",
+       x="",
+       y="") 
+
+  income_time_limits
+```
 
 Sed feugiat lacus nec neque mollis semper. Proin euismod ut diam vitae tristique. Nam varius venenatis dolor, at tristique ligula tincidunt vitae. Nullam cursus sagittis tortor at viverra. Sed vel varius diam, eu consectetur quam. Duis ac blandit lorem. Aenean urna enim, dignissim nec lacinia nec, commodo sit amet ante. Suspendisse fringilla sapien non enim vulputate, et posuere turpis fringilla. Donec vel nunc suscipit, rhoncus nulla vitae, consectetur ex. Fusce ornare sit amet leo ut aliquet. 

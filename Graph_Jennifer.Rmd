@@ -104,16 +104,11 @@ income_time_limits <- income_time %>%
              fill = race)) +
   #scale_y_continuous(labels=scales::dollar_format()) +
   #scale_fill_manual(values = c("#40E0D0","#6495ED", "#9370DB")) +
-  labs(title = "Average Retirement Savings Based on Student Loan Debt",
+  labs(title = "Title",
        x="",
-       y="") +
-  theme(plot.title.position = "plot",
-        legend.position = "none",
-        panel.border = element_blank(),
-        panel.grid.major = element_blank(),
-        panel.grid.minor = element_blank())
+       y="") 
 
-debt_retirement
+  income_time_limits
 ```
 
 
