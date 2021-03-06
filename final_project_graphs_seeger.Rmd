@@ -121,8 +121,6 @@ student_debt %>%
   theme_fivethirtyeight() +
   facet_wrap(~ race)
 
-
-
 ```
 
 
