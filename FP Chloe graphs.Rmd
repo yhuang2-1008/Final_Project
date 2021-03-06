@@ -64,8 +64,9 @@ tuition <- tuition_cost %>%
 
 debt <- student_debt %>% 
   ggplot(aes(x = year, y = loan_debt)) +
-  geom_() +
-  facet_wrap(~race)
+  scale_y_continuous(labels=scales::dollar_format()) +
+  geom_line() +
+  facet_wrap(~race) 
 
 
 tuition/debt
