@@ -56,7 +56,7 @@ income_mean <- readr::read_csv('https://raw.githubusercontent.com/rfordatascienc
 ```{r}
 states_map <- map_data("state")
 
-tuition_cost %>%
+ tuition_cost %>%
   mutate(state = str_to_lower(state)) %>%
   group_by(state) %>% 
   mutate(in_state_avg = mean(in_state_total)) %>% 
