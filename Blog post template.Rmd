@@ -126,7 +126,8 @@ race_wealth %>%
   scale_y_continuous(limits = c(0,200000), expand = c(0, 0),labels=scales::dollar_format())+
   scale_fill_manual(values = c("#6941e1","#4169e1", "#41b9e1"))+
   labs(title = "Average Family Liquid Retirement Savings from 1986-2016",
-       caption = "*Line represents median family wealth",
+       subtitle = "Line represents median family wealth",
+       caption = "Cynthia Aguilar",
        x="",
        y="") +
   theme_minimal() +
