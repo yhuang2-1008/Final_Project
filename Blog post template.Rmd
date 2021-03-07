@@ -123,8 +123,8 @@ race_wealth %>%
   labs(title = "Average Family Liquid Retirement Savings from 1986-2016",
        caption = "*Line represents median family wealth",
        x="",
-       y="")+
-  theme_minimal()+
+       y="") +
+  theme_minimal() +
   theme(plot.title.position = "plot",
         legend.position = "none") +
   facet_wrap(vars(race))
@@ -135,18 +135,16 @@ Donec ullamcorper, mi vel hendrerit lacinia, mauris elit malesuada est, vitae ti
 Sed id nisi arcu. Vivamus viverra rutrum libero, sed dictum leo consectetur sit amet. Ut blandit tristique purus id convallis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Sed imperdiet ante in diam hendrerit varius. Mauris tincidunt orci libero, in bibendum lacus iaculis sit amet. Ut feugiat felis id imperdiet lobortis. Donec eu laoreet ex, ac ultricies erat. Vestibulum ante nulla, convallis ac metus sit amet, posuere fringilla sapien. 
 
 ```{r, echo=FALSE}
-tuition <- tuition_cost %>% 
- ggplot() +
-  geom_density(aes(x = in_state_total, fill = "blue")) +
-  geom_density(aes(x = out_of_state_total, fill = "red")) +
-  theme()
-
-debt <- student_debt %>% 
-  ggplot(aes(x = year, y = loan_debt)) +
+student_debt %>% 
+  ggplot(aes(x = year, y = loan_debt, color = race)) +
   geom_line() +
-  facet_wrap(~race)
-
-tuition/debt
+  scale_color_manual(values = c("#9370DB","#6495ED", "#40E0D0")) + 
+  scale_y_continuous(limits = c(0, 18000), expand = c(0, 0),labels=scales::dollar_format()) + 
+  labs(title = "Student Loan Debt Based on Racial Groups",
+       caption = "Author: Chloe Nance",
+       x="",
+       y="",
+       color = "")
 ```
 Quisque ultricies scelerisque turpis, vitae fringilla mauris condimentum quis. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Pellentesque sodales vulputate ultrices. Maecenas dapibus, sem interdum ornare tempor, risus ligula pulvinar lectus, eget rutrum nulla diam a velit. Phasellus ac iaculis ligula, a convallis tortor. Donec pharetra dui sit amet ex commodo dapibus. Morbi eget laoreet erat. Morbi purus magna, blandit sit amet placerat vitae, aliquet id lectus. Aliquam ultrices magna lectus, vel vestibulum magna luctus non. Suspendisse eu ante at augue ornare porttitor. Sed facilisis, magna venenatis hendrerit molestie, nisl massa iaculis lorem, ac pretium est lectus lacinia risus.
 
