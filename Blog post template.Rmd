@@ -173,3 +173,18 @@ income_limits %>%
 Referring to Kate's patchwork graphs on student loan debt and enrollment based on racial groups, this graph shows that even though White students have a higher enrollment rate and have roughly the same amount of student loan debt, they nonetheless have significantly higher retirement savings. This is likely due to the wage gap in racial groups and the employment rate for people of color in higher paying positions. 
 
 
+
+```{r}
+home_owner %>%
+  ggplot(aes(x = year,
+             y = home_owner_pct,
+             color = race)) +
+  geom_line() + 
+  theme_fivethirtyeight() + 
+  labs(title = "Homeownership by race", 
+       x = "",
+       y = "") +
+  scale_y_continuous(labels=scales::percent_format()) +
+  scale_color_manual(values = c("#9370DB","#6495ED", "#40E0D0"))
+```
+
