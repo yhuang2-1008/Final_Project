@@ -119,13 +119,9 @@ race_wealth %>%
        caption = "*Line represents median family wealth",
        x="",
        y="")+
+  theme_minimal()+
   theme(plot.title.position = "plot",
-        legend.position = "none",
-        panel.border = element_blank(),
-        panel.grid.major = element_blank(),
-        panel.grid.minor = element_blank(),
-        axis.line = element_line(color = "black"),
-        axis.ticks = element_line(color = 'black')) +
+        legend.position = "none") +
   facet_wrap(vars(race))
 ```
 

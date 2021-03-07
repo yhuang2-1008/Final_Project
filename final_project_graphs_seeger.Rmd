@@ -109,6 +109,19 @@ home_owner %>%
        x = "",
        y = "")
 ```
+```{r}
+student_debt %>%
+  ggplot(aes(x = year,
+             y = loan_debt_pct, 
+             fill = race)) + 
+  geom_area(alpha = 0.8) +
+  labs(title = "Student loan debt by racial groups",
+       x= "",
+       y ="") + 
+  theme_fivethirtyeight() +
+  facet_wrap(~ race)
+
+```
 
 
 
