@@ -116,21 +116,10 @@ home_owner %>%
   theme_minimal() + 
   labs(title = "Homeownership by race", 
        x = "",
-       y = "") +
-<<<<<<< HEAD
-  scale_y_continuous(labels=scales::percent_format())
-<<<<<<< HEAD
-=======
-=======
+       y = "",
+       color = "") +
   scale_y_continuous(labels=scales::percent_format()) +
-  scale_fill_manual(values = c("#9370DB","#6495ED", "#40E0D0"))
-
-  
-  
->>>>>>> eba389e5798e99d1bd810afb683b677795371a65
-
-
->>>>>>> 0fe3680424e386b90eda43126b1366f36146f4ce
+  scale_color_manual(values = c("#9370DB","#6495ED", "#40E0D0"))
 ```
 
 

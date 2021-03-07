@@ -69,16 +69,20 @@ income_mean <- readr::read_csv('https://raw.githubusercontent.com/rfordatascienc
 ```{r, echo = FALSE}
 debtplot <- student_debt %>%
   ggplot(aes(x = year,
-             y = loan_debt, 
+             y = loan_debt_pct, 
              fill = race)) + 
   geom_area(alpha = 0.8) +
-  labs(title = "Student loan debt by racial groups",
+  labs(title = "Percentage of student loan debt by racial groups",
        x= "",
-       y ="",
-       fill = "") + 
-  theme_fivethirtyeight() +
+       y ="") + 
+  theme_minimal() +
+  theme(legend.position = "none") +
   facet_wrap(~ race) + 
-  scale_fill_manual(values = c("#6941e1","#4169e1", "#41b9e1"))
+  scale_y_continuous(labels=scales::percent_format()) +
+  scale_fill_manual(values = c("#9370DB","#6495ED", "#40E0D0"))
+
+  
+
 
 
 compplot <- diversity_school %>%
@@ -92,11 +96,12 @@ compplot <- diversity_school %>%
              y = percent, 
              fill = category)) + 
   geom_boxplot() + 
-  labs(title = "Average proportion of student enrollment based on racial group", 
+  labs(title = "Average proportion of student enrollment by racial groups",
        x = "",
-       y= "",
-       fill = "") + 
-  scale_fill_manual(values = c("#6941e1","#4169e1", "#41b9e1"))
+       y= "") + 
+  theme_minimal() +
+  theme(legend.position = "none") +
+  scale_fill_manual(values = c("#9370DB","#6495ED", "#40E0D0"))
 
 
 debtplot/compplot
