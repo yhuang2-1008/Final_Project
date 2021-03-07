@@ -83,27 +83,23 @@ student_debt %>%
 
 
 ```{r}
-income_time_limits <- income_time %>%  
-  left_join(income_limits, by =c("year")) %>% 
-  filter(race != "All Races",
-         race != "Asian Alone",
-         race != "Asian Alone or in Combination") %>% 
-  mutate(ordered_quintile = fct_infreq(income_quintile)) %>% 
+income_limits %>%  
+  left_join(income_time, by =c("year")) %>% 
+  filter(race %in% c("White Alone", "Black Alone", "Hispanic")) %>% 
+  mutate(ordered = fct_reorder(income_quintile,
+                               income_dollars,
+                               .desc = FALSE)) %>% 
   ggplot() +
-  geom_boxplot(aes(x = ordered_quintile,
+  geom_boxplot(aes(x = ordered,
              y = income_dollars,
-             fill = race)) +
-  #scale_y_continuous(labels=scales::dollar_format()) +
-  #scale_fill_manual(values = c("#40E0D0","#6495ED", "#9370DB")) +
-  labs(title = "Title",
-       x="",
-       y="") 
-
-  income_time_limits
+             fill = race)) + 
+  scale_y_continuous(limits = c(0,200000), expand = c(0, 0),labels=scales::dollar_format()) + 
+  labs(title = "Income limits based on racial groups",
+       x = "",
+       y = "",
+       fill = "Race") + 
+  scale_fill_manual(values = c("#40E0D0","#6495ED", "#9370DB"))
 ```
 
-```{r}
-
-```
 
 
