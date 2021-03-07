@@ -65,43 +65,35 @@ tuition_cost %>%
            aes(map_id = state,
                fill = in_state_avg)) +
     expand_limits(x = states_map$long, y = states_map$lat) + 
-   scale_fill_viridis_c(option = "inferno") +
-    labs(title = "Title",
-       caption = "Author : Chloe Nance") +
+   scale_fill_viridis_c(option = "inferno", labels=scales::dollar_format()) +
+    labs(title = "Average In State Tuition per State",
+       caption = "Author : Chloe Nance",
+       fill = "Average Cost") +
   theme_map() +
-  theme()
+  theme(plot.title = element_text(face = "bold", hjust = .5, size = 15),
+        plot.caption = element_text(face = "bold", size = 9),
+        legend.title = element_text(face = "bold"))
 ```
 ```{r}
-tuition_cost %>% 
-  filter(type %in% c("Private", "Public")) %>% 
-  ggplot(aes(y = in_state_total, fill = type)) +
-  scale_y_continuous(labels=scales::dollar_format()) +
-  geom_histogram() +
-  labs(title = "Range of In State Tuition",
+states_map <- map_data("state")
+
+tuition_cost %>%
+  mutate(state = str_to_lower(state)) %>%
+  group_by(state) %>% 
+  mutate(out_state_avg = mean(out_of_state_total)) %>% 
+  ggplot() +
+  geom_map(map = states_map,
+           aes(map_id = state,
+               fill = out_state_avg)) +
+    expand_limits(x = states_map$long, y = states_map$lat) + 
+   scale_fill_viridis_c(option = "inferno",labels=scales::dollar_format()) +
+    labs(title = "Average Out of State Tuition per State",
        caption = "Author : Chloe Nance",
-       x ="",
-       y ="") +
-  facet_wrap(~type) +
-   theme(plot.title = element_text(face = "bold", hjust = .5, size = 15),
+       fill = "Average Cost") +
+  theme_map() +
+  theme(plot.title = element_text(face = "bold", hjust = .5, size = 15),
         plot.caption = element_text(face = "bold", size = 9),
-        legend.title = element_text(face = "bold"),
-        axis.text = element_text(color = "black", face = "italic"))
-```
-```{r}
-tuition_cost %>% 
-  filter(type %in% c("Private", "Public")) %>% 
-  ggplot(aes(y = out_of_state_total, fill = type)) +
-  scale_y_continuous(labels=scales::dollar_format()) +
-  geom_histogram() +
-  labs(title = "Range of Out of State Tuition",
-       caption = "Author : Chloe Nance",
-       x ="",
-       y ="") +
-  facet_wrap(~type) +
-   theme(plot.title = element_text(face = "bold", hjust = .5, size = 15),
-        plot.caption = element_text(face = "bold", size = 9),
-        legend.title = element_text(face = "bold"),
-        axis.text = element_text(color = "black", face = "italic"))
+        legend.title = element_text(face = "bold"))
 ```
 
 
