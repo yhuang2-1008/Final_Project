@@ -68,10 +68,10 @@ income_mean <- readr::read_csv('https://raw.githubusercontent.com/rfordatascienc
 ```{r}
 debtplot <- student_debt %>%
   ggplot(aes(x = year,
-             y = loan_debt, 
+             y = loan_debt_pct, 
              fill = race)) + 
   geom_area(alpha = 0.8) +
-  labs(title = "Student loan debt by racial groups",
+  labs(title = "Percentage of student loan debt by racial groups",
        x= "",
        y ="") + 
   theme_fivethirtyeight() +
@@ -107,21 +107,11 @@ home_owner %>%
   theme_fivethirtyeight() + 
   labs(title = "Homeownership by race", 
        x = "",
-       y = "")
-```
-```{r}
-student_debt %>%
-  ggplot(aes(x = year,
-             y = loan_debt_pct, 
-             fill = race)) + 
-  geom_area(alpha = 0.8) +
-  labs(title = "Student loan debt by racial groups",
-       x= "",
-       y ="") + 
-  theme_fivethirtyeight() +
-  facet_wrap(~ race)
+       y = "") +
+  scale_y_continuous(labels=scales::percent_format())
 
 ```
+
 
 
 
