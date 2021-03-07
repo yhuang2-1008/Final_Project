@@ -34,6 +34,7 @@ library(shiny)
 library(ggimage)
 library(tidytuesdayR)
 library(patchwork)
+theme_minimal()
 ```
 
 ```{r, echo=FALSE}
@@ -73,9 +74,11 @@ debtplot <- student_debt %>%
   geom_area(alpha = 0.8) +
   labs(title = "Student loan debt by racial groups",
        x= "",
-       y ="") + 
+       y ="",
+       fill = "") + 
   theme_fivethirtyeight() +
-  facet_wrap(~ race)
+  facet_wrap(~ race) + 
+  scale_fill_manual(values = c("#6941e1","#4169e1", "#41b9e1"))
 
 
 compplot <- diversity_school %>%
@@ -91,7 +94,9 @@ compplot <- diversity_school %>%
   geom_boxplot() + 
   labs(title = "Average proportion of student enrollment based on racial group", 
        x = "",
-       y= "")
+       y= "",
+       fill = "") + 
+  scale_fill_manual(values = c("#6941e1","#4169e1", "#41b9e1"))
 
 
 debtplot/compplot
@@ -161,8 +166,8 @@ income_limits %>%
   labs(title = "Income limits based on racial groups",
        x = "",
        y = "",
-       fill = "Race") + 
-  scale_fill_manual(values = c("#40E0D0","#6495ED", "#9370DB"))
+       fill = "") + 
+  scale_fill_manual(values = c("#9370DB","#6495ED", "#40E0D0"))
 ```
 
 
@@ -176,10 +181,10 @@ student_debt %>%
   geom_line(aes(x = loan_debt,
              y = retirement,
              color = race)) + 
-  scale_color_manual(values = c("#40E0D0","#6495ED", "#9370DB")) + 
+  scale_color_manual(values = c("#9370DB","#6495ED", "#40E0D0")) + 
   labs(title = "Average Retirement Savings Based on Student Loan Debt",
        x = "Loan Debt",
        y = "Retirement Savings",
-       color = "Race") 
+       color = "") 
 ```
 
