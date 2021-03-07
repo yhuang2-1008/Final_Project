@@ -74,10 +74,12 @@ debtplot <- student_debt %>%
   labs(title = "Percentage of student loan debt by racial groups",
        x= "",
        y ="") + 
-  theme_fivethirtyeight() +
+  theme_minimal() +
   theme(legend.position = "none") +
   facet_wrap(~ race) + 
-  scale_y_continuous(labels=scales::percent_format())  
+  scale_y_continuous(labels=scales::percent_format()) +
+  scale_fill_manual(values = c("#9370DB","#6495ED", "#40E0D0"))
+
   
 
 
@@ -97,7 +99,10 @@ compplot <- diversity_school %>%
        subtitle = "Comparing different racial groups",
        x = "",
        y= "") + 
-  theme_fivethirtyeight()
+  theme_minimal() +
+  theme(legend.position = "none") +
+  scale_fill_manual(values = c("#9370DB","#6495ED", "#40E0D0"))
+
 
 debtplot/compplot
 ```
@@ -109,11 +114,15 @@ home_owner %>%
              y = home_owner_pct,
              color = race)) +
   geom_line() + 
-  theme_fivethirtyeight() + 
+  theme_minimal() + 
   labs(title = "Homeownership by race", 
        x = "",
        y = "") +
-  scale_y_continuous(labels=scales::percent_format())
+  scale_y_continuous(labels=scales::percent_format()) +
+  scale_fill_manual(values = c("#9370DB","#6495ED", "#40E0D0"))
+
+  
+  
 
 
 ```
