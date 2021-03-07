@@ -75,7 +75,11 @@ debtplot <- student_debt %>%
        x= "",
        y ="") + 
   theme_fivethirtyeight() +
-  facet_wrap(~ race)
+  theme(legend.position = "none") +
+  facet_wrap(~ race) + 
+  scale_y_continuous(labels=scales::percent_format())  
+  
+
 
 
 compplot <- diversity_school %>%
@@ -89,7 +93,8 @@ compplot <- diversity_school %>%
              y = percent, 
              fill = category)) + 
   geom_boxplot() + 
-  labs(title = "Average proportion of student enrollment based on racial group", 
+  labs(title = "Average proportion of student enrollment",
+       subtitle = "Comparing different racial groups",
        x = "",
        y= "") + 
   theme_fivethirtyeight()
@@ -109,6 +114,11 @@ home_owner %>%
        x = "",
        y = "") +
   scale_y_continuous(labels=scales::percent_format())
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 0fe3680424e386b90eda43126b1366f36146f4ce
 ```
 
 
