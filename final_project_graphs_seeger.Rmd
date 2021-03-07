@@ -109,7 +109,6 @@ home_owner %>%
        x = "",
        y = "") +
   scale_y_continuous(labels=scales::percent_format())
-
 ```
 
 
