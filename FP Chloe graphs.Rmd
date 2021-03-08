@@ -101,25 +101,6 @@ tuition_cost %>%
 
 
 ```{r}
-debt <- student_debt %>% 
-  ggplot(aes(x = year, y = loan_debt)) +
-  scale_y_continuous(labels=scales::dollar_format()) +
-  geom_line() +
-  labs(title = "Student loan debt per racial group",
-       caption = "Author : Chloe Nance",
-       x ="",
-       y ="") +
-  facet_wrap(~race) +
-    theme(plot.title = element_text(face = "bold", hjust = .5, size = 15),
-        plot.caption = element_text(face = "bold", size = 9),
-        legend.title = element_text(face = "bold"),
-        axis.text = element_text(color = "black", face = "italic"))
-
-debt
-```
-
-
-```{r}
 states_map <- map_data("state")
 
 options(scipen=10000)
