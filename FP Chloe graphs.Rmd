@@ -65,7 +65,7 @@ states_map <- map_data("state")
            aes(map_id = state,
                fill = in_state_avg)) +
     expand_limits(x = states_map$long, y = states_map$lat) + 
-   scale_fill_viridis_c(option = "inferno", labels=scales::dollar_format()) +
+    scale_fill_viridis_c(option = "inferno", labels=scales::dollar_format()) +
     labs(title = "Average In State Tuition per State",
        caption = "Author : Chloe Nance",
        fill = "Average Cost") +
@@ -127,6 +127,7 @@ options(scipen=10000)
 diversity_school %>%
   mutate(state = str_to_lower(state)) %>% 
   group_by(state) %>% 
+  filter(category %in% c("Black", "White", "Hispanic", "Total Minority")) %>% 
   ggplot() +
   geom_map(map = states_map,
            aes(map_id = state,
