@@ -53,10 +53,6 @@ income_distribution <- readr::read_csv('https://raw.githubusercontent.com/rforda
 income_mean <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-02-09/income_mean.csv')
 ```
 
-```{r}
-st99_M_data
-```
-
 
 ```{r}
 states_map <- map_data("state")
@@ -90,21 +86,22 @@ state_center <- tibble(state = str_to_lower(state.name),
 
 ```{r}
 states_map <- map_data("state")
-
+  
 state_center <- tibble(state = str_to_lower(state.name),
                        long = state.center$x,
                        lat = state.center$y)
-
+  
 tuition_cost %>%
   mutate(state = str_to_lower(state)) %>%
   group_by(state) %>% 
   summarise(out_state_avg = mean(out_of_state_total)) %>% 
   left_join(state_center, by = "state") %>% 
+  filter(state != c("Alaska", "Hawaii")) %>% 
   ggplot() +
   geom_map(map = states_map,
            aes(map_id = state,
-               fill = out_state_avg)) +
-  geom_text(aes(x = long, y= lat, label = paste("$",round(out_state_avg/1000),"K", sep = "")), color ="white", size = 2.5) +
+              fill = out_state_avg)) +
+  geom_label(aes(x = long, y= lat, label = paste("$",round(out_state_avg/1000),"K", sep = "")), fill = "black", color = "white", size = 2.5) +
     expand_limits(x = states_map$long, y = states_map$lat) + 
    scale_fill_viridis_c(option = "inferno",labels=scales::dollar_format()) +
     labs(title = "Average Out of State Tuition per State",
@@ -144,3 +141,4 @@ diversity_school %>%
         legend.box.margin = margin(6, 6, 6, 6),
         legend.position = "right")
 ```
+
