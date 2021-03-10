@@ -111,13 +111,16 @@ debtplot/compplot
 home_owner %>%
   ggplot(aes(x = year,
              y = home_owner_pct,
-             color = race)) +
+             color = race, 
+             label = race)) +
   geom_line() + 
   theme_minimal() + 
   labs(title = "Homeownership by race", 
        x = "",
        y = "",
        color = "") +
+  geom_label(data = home_owner %>%
+               filter(year == 2015)) + 
   scale_y_continuous(labels=scales::percent_format()) +
   scale_color_manual(values = c("#9370DB","#6495ED", "#40E0D0"))
 ```
