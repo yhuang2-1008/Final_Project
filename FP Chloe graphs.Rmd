@@ -137,10 +137,10 @@ diversity_school %>%
   geom_map(map = states_map,
            aes(map_id = state,
                fill = enrollment)) +
-    expand_limits(x = states_map$long, y = states_map$lat) + 
-   scale_fill_viridis_c(option = "inferno") +
-    labs(title = "Diversity enrollment in US colleges",
-       caption = "Author : Chloe Nance",
+  expand_limits(x = states_map$long, y = states_map$lat) + 
+  scale_fill_viridis_c(option = "inferno") +
+  labs(title = "Diversity enrollment in US colleges",
+       caption = "Author: Chloe Nance",
        fill = "Enrollment") +
   facet_wrap(~category) +
   theme_map() +
