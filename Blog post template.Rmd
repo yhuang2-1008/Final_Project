@@ -1,7 +1,7 @@
 ---
-title: "Blog post template"
+title: "Effects of Student Loan Debt on Lifetime Income, Retirement Savings, and Homeownership"
 author: "Cynthia Aguilar, Jennifer Huang, Chloe Nance, Kate Seeger"
-date: "3/5/2021"
+date: "3/10/2021"
 output: 
   html_document:
     toc: TRUE
@@ -43,10 +43,6 @@ theme_set(theme_minimal())
 tuition_cost <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-03-10/tuition_cost.csv')
 diversity_school <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-03-10/diversity_school.csv')
 
-#tuition_income <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-03-10/tuition_income.csv') 
-#salary_potential <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-03-10/salary_potential.csv')
-#historical_tuition <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-03-10/historical_tuition.csv')
-
 
 # Wealth and Income Over Time
 student_debt <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-02-09/student_debt.csv')
@@ -55,20 +51,27 @@ home_owner <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience
 race_wealth <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-02-09/race_wealth.csv')
 income_time <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-02-09/income_time.csv')
 income_limits <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-02-09/income_limits.csv')
-
-#lifetime_earn <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-02-09/lifetime_earn.csv')
-#income_aggregate <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-02-09/income_aggregate.csv')
-#income_distribution <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-02-09/income_distribution.csv')
-#income_mean <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-02-09/income_mean.csv')
 ```
+
+$~$
+$~$
+$~$
 
 
 ## Introduction
 In 2017, the Urban Institute released data regarding wealth inequality in the United States. Their data delineated the increase in wealth inequality from 1986 to 2016. Across factors such as student loan debt and homeownership the wealth gap between Black and Hispanic families when compared to White families had bettered little over the years. This project incorporates historical income tables provided by the U.S Census Bureau and Tuitiontacker.org to further explore these disparities in the United States.   
 
+$~$
+$~$
 
 
-## 1) Map of In and Out-of-state College Tuition
+### 1) Map of In and Out-of-state College Tuition
+
+Before getting into student loan debt and home-ownership, one usually attends a university. When it comes to deciding which university you want to attend, cost is a very important factor. Not everyone has the financial resources to attend a 4-year college for more than $20,000 due to their families' background, and even then it’s pushing it for some. That is why most students leave university with a mountain of debt they will be repaying for the rest of their lives. 
+
+As shown by the maps below, in state tuition is generally cheaper than out of state tuition. However, it should be noted that these tuition costs include room and board, therefore this total cost may seem more than what one would expect. Despite in state tuition being relatively cheaper, colleges in the northeast coast are much more expensive than those in the rest of the country regardless of which type of tuition you are paying. Meanwhile, the mid-west and the south tends to have relatively low costs while the west coast is just slightly more expensive in comparison. 
+
+$~$
 
 ```{r, echo = FALSE}
 states_map <- map_data("state")
@@ -95,7 +98,7 @@ tuition_cost %>%
              size = 2.5) + 
   expand_limits(x = states_map$long, y = states_map$lat) + 
   scale_fill_viridis_c(option = "inferno", labels=scales::dollar_format()) +
-  labs(title = "Average In State Tuition per State",
+  labs(title = "Average In-State Tuition Per State",
        caption = "Author: Chloe Nance",
        fill = "Average Cost") +
   theme_map() +
@@ -131,7 +134,7 @@ tuition_cost %>%
              size = 2.5) +
   expand_limits(x = states_map$long, y = states_map$lat) + 
   scale_fill_viridis_c(option = "inferno",labels=scales::dollar_format()) +
-  labs(title = "Average Out of State Tuition per State",
+  labs(title = "Average Out-of-State Tuition Per State",
        caption = "Author: Chloe Nance",
        fill = "Average Cost") +
   theme_map() +
@@ -140,7 +143,13 @@ tuition_cost %>%
         legend.title = element_text(face = "bold"))
 ```
 
+$~$
 
+In comparison to the average cost of tuition for in and out-of-state, the diversity enrollment map shows that White students have more financial freedom to choose whichever university they want to attend. This map also shows that White college students represent the majority population of US college students. Generally, given that minority students get the shorter end of the financial stick, they tend to not go to college and go straight into the workforce to earn for their families. 
+
+Looking at the highest number of college students per racial group, we see that Arizona, Minnesota, and California have the most Black students, while Florida, Texas, and Arizona have the most Hispanic students. Overall, Arizona, Florida, Texas have the most minority students. Arizona may seem to be the most “diverse” state, however, this does not indicate the actual diversity enrollment in each individual university. Indiana, Arizona, and Utah have the highest number of White college students.
+
+$~$
 
 ```{r, echo = FALSE}
 states_map <- map_data("state")
@@ -157,7 +166,7 @@ diversity_school %>%
                fill = enrollment)) +
   expand_limits(x = states_map$long, y = states_map$lat) + 
   scale_fill_viridis_c(option = "inferno") +
-  labs(title = "Diversity enrollment in US colleges",
+  labs(title = "Diversity Enrollment in US Colleges",
        caption = "Author: Chloe Nance",
        fill = "Enrollment") +
   facet_wrap(~category) +
@@ -170,11 +179,19 @@ diversity_school %>%
         legend.position = "right")
 ```
 
+$~$
+$~$
 
 
+### 2) Student Loan Debt and Average Enrollment of Students Based on Racial Group
 
+These graphs are used to compare the proportion of student enrollment and the proportion of student debt over three racial groups, Black, Hispanic, and White. Our top graph shows student loan debt proportion based on racial groups, and the bottom graph shows the proportional enrollment of students based on three racial groups. Comparing these graphs we can see that White students make up, on average, 60% of the student population of colleges and universities; whereas, Black students average 10% and Hispanic students <10% of the student population. 
 
-## 2) Student loan debt and Average enrollment of students based on racial group
+However, the student loan debt percent, as shown in the top graph, is not proportional to the relative enrollment of each racial group. The top graph shows that the percentage of families that have student loan debt is significantly greater for Black and Hispanic families. Here we can see that in 2016 about 32% of White families have student loan debt, Hispanic families made up ~ 21% of student loan debt, and Black families made up about 42% of the student loan debt. So combined, Black and Hispanic students make up about ~ %20 percent of the student population, yet hold ~ 63% of the student loan debt. 
+
+Here we can see that there is a directly disproportionate impact of student loan debt on Black and Hispanic students. Student loan debt can have lasting impacts as it accrues interest overtime, and depending on what type of institution one attends, interest rates can be between 5.5% - 12%. Loans can have lasting financial impacts on families and individuals for many years, and can impact future investments and finances. 
+
+$~$
 
 ```{r, echo = FALSE}
 debtplot <- student_debt %>%
@@ -182,7 +199,7 @@ debtplot <- student_debt %>%
              y = loan_debt_pct, 
              fill = race)) + 
   geom_area(alpha = 0.8) +
-  labs(title = "Percentage of student loan debt by racial groups",
+  labs(title = "Percentage of Student Loan Debt by Racial Groups",
        x= "",
        y ="") + 
   theme_minimal() +
@@ -206,7 +223,7 @@ compplot <- diversity_school %>%
              y = percent, 
              fill = category)) + 
   geom_boxplot() + 
-  labs(title = "Average proportion of student enrollment by racial groups",
+  labs(title = "Average Proportion of Student Enrollment by Racial Groups",
        x = "",
        y= "",
        caption = "Author: Kate Seeger") + 
@@ -221,37 +238,17 @@ compplot <- diversity_school %>%
 debtplot/compplot
 ```
 
+$~$
+$~$
 
 
-## 3) Income limit and quintile graph based on racial group
+### 3) Family Liquid Retirement Savings from 1986-2016
 
-```{r, echo = FALSE}
-income_limits %>%  
-  left_join(income_time, by =c("year")) %>% 
-  filter(race %in% c("White Alone", "Black Alone", "Hispanic")) %>% 
-  mutate(ordered = fct_reorder(income_quintile,
-                               income_dollars,
-                               .desc = FALSE)) %>% 
-  ggplot() +
-  geom_boxplot(aes(x = ordered,
-             y = income_dollars,
-             fill = race)) + 
-  scale_y_continuous(limits = c(0,200000), expand = c(0, 0),labels=scales::dollar_format()) + 
-  labs(title = "Income limits based on racial groups",
-       x = "",
-       y = "",
-       fill = "",
-       caption = "Author: Jennifer Huang") + 
-  scale_fill_manual(values = c("#9370DB","#6495ED", "#40E0D0")) + 
-  theme(plot.title = element_text(face = "bold", hjust = .5, size = 15),
-        plot.caption = element_text(face = "bold", size = 9),
-        legend.title = element_text(face = "bold"))
-```
+This histogram shows how average liquid retirement savings have changed in the United States over a span of 30 years. White families' liquid retirement savings appears to steadily increase from 1986 to 2016; however, Black and Hispanic families' retirement savings show little change when compared to White families. In 2016 the average liquid retirement savings of White families seems to have tripled in amount nearing a total value of $150,000; at the same time, Black and Hispanic families' average family liquid retirement savings remains under $50,000 across the 30 years. Another difference between the average family liquid retirement savings of White families in comparison to Black and Hispanic families is the consistent growth of retirement savings amongst white families. Prior to 2010, Black families also reported consistent growth however those numbers began to decrease. Hispanic families retirement savings has inconsistently grown over the years, but drops significantly in 2016.  
 
+Likewise median family wealth among Black and Hispanic families remains under $50,000. White families' wealth is shown to peak in 2007 at $198,622.700. Although family wealth among White families decreases in the graphs, it remains above that of Black and Hispanic families. These findings highlight the disparity in liquid retirement savings and family wealth between ethnic-racial groups in the United States because Black and Hispanic families see little increase in their retirement savings while White families liquid retirement savings far surpasses those of Black and Hispanic families. 
 
-
-
-## 4) Average Family Liquid Retirement Savings from 1986-2016
+$~$
 
 ```{r, echo=FALSE}
 race_wealth %>%   
@@ -259,12 +256,12 @@ race_wealth %>%
   left_join(retirement, by =c("race","year")) %>% 
   ggplot(aes(x= year,
              y= retirement,
-             fill=race))+
-  geom_histogram(stat = "identity")+
-  geom_line(aes(y=wealth_family))+
+             fill=race)) +
+  geom_histogram(stat = "identity") +
+  geom_line(aes(y=wealth_family)) +
   scale_x_continuous(limits = c(1989,2017), expand = c(0, 0)) +
-  scale_y_continuous(limits = c(0,200000), expand = c(0, 0),labels=scales::dollar_format())+
-  scale_fill_manual(values = c("#6941e1","#4169e1", "#41b9e1"))+
+  scale_y_continuous(limits = c(0,200000), expand = c(0, 0),labels=scales::dollar_format()) +
+  scale_fill_manual(values = c("#6941e1","#4169e1", "#41b9e1")) +
   labs(title = "Average Family Liquid Retirement Savings from 1986-2016",
        subtitle = "Line represents median family wealth",
        caption = "Author: Cynthia Aguilar",
@@ -281,9 +278,49 @@ race_wealth %>%
 ```
 
 
+$~$
+$~$
+
+### 4) Income Limit and Quintile Graph Based on Racial Group
+
+From the liquid retirement savings graph we see that White families have significantly more savings. Now, looking at the income limits and categories of these racial groups we also see that Black and Hispanic racial groups continue to have the lowest income. This reflects the income gap between racial groups and how even if a White student and student of color may end up having the same degree from the same institution, their income over lifetime is going to be drastically different. Even for people of color in the Top 5% income category, Black and Hispanic people have significantly lower income than does White people. Median income for White people in the Top 5% is around $150,000 whereas median income for Balck people is around $120,000 and $130,000 for Hispanic people in the Top 5%. This income gap in the other four categories is even more pronounced. 
+
+$~$
+
+```{r, echo = FALSE}
+income_limits %>%  
+  left_join(income_time, by =c("year")) %>% 
+  filter(race %in% c("White Alone", "Black Alone", "Hispanic")) %>% 
+  mutate(ordered = fct_reorder(income_quintile,
+                               income_dollars,
+                               .desc = FALSE)) %>% 
+  ggplot() +
+  geom_boxplot(aes(x = ordered,
+             y = income_dollars,
+             fill = race)) + 
+  scale_y_continuous(limits = c(0,200000), expand = c(0, 0),labels=scales::dollar_format()) + 
+  labs(title = "Lifetime Income Limits Based on Racial Groups",
+       x = "",
+       y = "",
+       fill = "",
+       caption = "Author: Jennifer Huang") + 
+  scale_fill_manual(values = c("#9370DB","#6495ED", "#40E0D0")) + 
+  theme(plot.title = element_text(face = "bold", hjust = .5, size = 15),
+        plot.caption = element_text(face = "bold", size = 9),
+        legend.title = element_text(face = "bold"))
+```
 
 
-## 5) Home ownership by racial group
+$~$
+$~$
+
+### 5) Home ownership by racial group
+
+This graph shows the average home-ownership by racial groups. We can see that for each year, home ownership by white people stayed around the same 70%, whereas Black and Hispanic home-ownership has varied between 40% - 50% on average over the past 3 decades. There are two peaks in this graph, during 1980 and 2005 where all racial groups' home-ownership increased. However, there still remains a huge disparity in home-ownership that is correlated with income limits, student debt, and liquid savings. It is much harder to purchase a home without a good credit score, down payment, or savings to receive a mortgage for the house. 
+
+Double jeopardy refers to the additional barriers and burdens faced by individuals who hold multiple disadvantaged statuses. People of color still face lasting effects of historic racist redlining policies, as they were explicitly excluded from being able to buy or rent certain properties. Black and Hispanic people face multiple challenges with racism, stereotypes, wage inequality and more. Furthermore, policies and expectations in US society continue to neglect and take advantage of people of color. 
+
+$~$
 
 ```{r, echo = FALSE}
 home_owner %>%
@@ -292,7 +329,7 @@ home_owner %>%
              color = race)) +
   geom_line() + 
   theme_minimal() + 
-  labs(title = "Homeownership by race", 
+  labs(title = "Homeownership by Racial Groups", 
        x = "",
        y = "",
        color = "",
@@ -305,6 +342,12 @@ home_owner %>%
 ```
 
 
+$~$
+$~$
 
 ## Conclusion
 Black and Hispanic people’s varied experiences in double jeopardy is only a tip of the iceberg to the ingrained racism and inequality in the US. The data presented in this blog post does not account for individual differences in socioeconomic status, educational background, neighborhood environment, as well as other racial groups and minority groups. Despite that the analyses set forth in this blog post should be taken with a grain of salt, the overall trend inferred from this data set reflects the present day situation. 
+
+
+$~$
+$~$
