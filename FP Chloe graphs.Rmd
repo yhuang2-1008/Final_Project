@@ -85,7 +85,6 @@ tuition_cost %>%
   theme(plot.title = element_text(face = "bold", hjust = .5, size = 15),
         plot.caption = element_text(face = "bold", size = 9),
         legend.title = element_text(face = "bold"))
-
 ```
 
 
@@ -152,3 +151,20 @@ diversity_school %>%
         legend.position = "right")
 ```
 
+
+
+
+## Student loan debt based on racial group
+
+```{r, echo=FALSE}
+student_debt %>% 
+  ggplot(aes(x = year, y = loan_debt, color = race)) +
+  geom_line() +
+  scale_color_manual(values = c("#9370DB","#6495ED", "#40E0D0")) + 
+  scale_y_continuous(limits = c(0, 18000), expand = c(0, 0),labels=scales::dollar_format()) + 
+  labs(title = "Student Loan Debt Based on Racial Groups",
+       caption = "Author: Chloe Nance",
+       x="",
+       y="",
+       color = "")
+```

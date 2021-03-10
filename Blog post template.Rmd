@@ -34,7 +34,7 @@ library(shiny)
 library(ggimage)
 library(tidytuesdayR)
 library(patchwork)
-theme_minimal()
+theme_set(theme_minimal())
 ```
 
 ```{r, echo=FALSE}
@@ -62,7 +62,82 @@ income_limits <- readr::read_csv('https://raw.githubusercontent.com/rfordatascie
 ```
 
 
-## First Heading
+## 1) Map of In and Out-of-state College Tuition
+
+```{r, echo = FALSE}
+states_map <- map_data("state")
+
+state_center <- tibble(state = str_to_lower(state.name),
+                       long = state.center$x,
+                       lat = state.center$y)
+
+tuition_cost %>%
+  mutate(state = str_to_lower(state)) %>%
+  group_by(state) %>% 
+  summarise(in_state_avg = mean(in_state_total)) %>%
+  left_join(state_center, by = "state") %>% 
+  ggplot() +
+  geom_map(map = states_map,
+           aes(map_id = state,
+               fill = in_state_avg)) +
+  geom_label(aes(x = long, 
+                 y = lat,
+                 label = paste("$", round(in_state_avg/1000),"K", sep = "")),
+             fill = "black", 
+             color = "white", 
+             size = 2.5) + 
+  expand_limits(x = states_map$long, y = states_map$lat) + 
+  scale_fill_viridis_c(option = "inferno", labels=scales::dollar_format()) +
+  labs(title = "Average In State Tuition per State",
+       caption = "Author: Chloe Nance",
+       fill = "Average Cost") +
+  theme_map() +
+  theme(plot.title = element_text(face = "bold", hjust = .5, size = 15),
+        plot.caption = element_text(face = "bold", size = 9),
+        legend.title = element_text(face = "bold"))
+```
+
+
+
+```{r,  echo = FALSE}
+states_map <- map_data("state")
+  
+state_center <- tibble(state = str_to_lower(state.name),
+                       long = state.center$x,
+                       lat = state.center$y)
+  
+tuition_cost %>%
+  mutate(state = str_to_lower(state)) %>%
+  group_by(state) %>% 
+  summarise(out_state_avg = mean(out_of_state_total)) %>% 
+  left_join(state_center, by = "state") %>% 
+  filter(state != c("Alaska", "Hawaii")) %>% 
+  ggplot() +
+  geom_map(map = states_map,
+           aes(map_id = state,
+              fill = out_state_avg)) +
+  geom_label(aes(x = long, 
+                 y = lat, 
+                 label = paste("$", round(out_state_avg/1000), "K", sep = "")), 
+             fill = "black", 
+             color = "white", 
+             size = 2.5) +
+  expand_limits(x = states_map$long, y = states_map$lat) + 
+  scale_fill_viridis_c(option = "inferno",labels=scales::dollar_format()) +
+  labs(title = "Average Out of State Tuition per State",
+       caption = "Author: Chloe Nance",
+       fill = "Average Cost") +
+  theme_map() +
+  theme(plot.title = element_text(face = "bold", hjust = .5, size = 15),
+        plot.caption = element_text(face = "bold", size = 9),
+        legend.title = element_text(face = "bold"))
+```
+
+
+
+
+
+## 2) Student loan debt and Average enrollment of students based on racial group
 
 ```{r, echo = FALSE}
 debtplot <- student_debt %>%
@@ -105,11 +180,34 @@ compplot <- diversity_school %>%
 debtplot/compplot
 ```
 
-Proin sed dignissim ex. Pellentesque volutpat rutrum nisl, quis faucibus nibh maximus sed. Praesent non nisl id velit euismod vulputate in sit amet mauris. Donec vitae nisi eu magna tempor iaculis. Praesent placerat enim quis pulvinar cursus. Vestibulum malesuada magna felis, eget ullamcorper ante maximus pretium. Ut a hendrerit mi. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Donec fermentum nisl vitae diam vulputate ullamcorper. Aliquam eu augue placerat, placerat augue quis, aliquet mi. Donec tristique, enim a mattis finibus, massa ipsum gravida magna, id pellentesque velit nulla eu nibh. Aliquam neque purus, bibendum vel fringilla vel, commodo quis ex. Duis sit amet diam turpis. Duis imperdiet metus dignissim, luctus nisl ornare, malesuada ex. Nulla convallis mi eu ex fringilla porta. 
 
-## Second Heading
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla tempus efficitur volutpat. Suspendisse sollicitudin ligula augue. Curabitur non eros elit. Nullam id odio vel eros facilisis rhoncus et a urna. Mauris tristique convallis felis laoreet pellentesque. Maecenas eget arcu venenatis, sollicitudin est in, pretium nulla. Sed feugiat, nibh sed laoreet mollis, dolor diam euismod turpis, at luctus massa risus vel sapien. Maecenas volutpat turpis sit amet sem faucibus ultricies. In urna nulla, dapibus nec congue et, facilisis nec nunc. Curabitur viverra, massa ac porta porta, neque neque sollicitudin sapien, et sollicitudin neque eros vel ligula. Pellentesque euismod metus quis augue ornare, vel egestas nunc iaculis. Aenean lacus leo, sollicitudin aliquet efficitur eu, molestie ac massa. In id maximus nibh. Vestibulum cursus tincidunt sem, eget fermentum libero laoreet molestie. Ut sed pellentesque mi. 
+## 3) Income limit and quintile graph based on racial group
+
+```{r, echo = FALSE}
+income_limits %>%  
+  left_join(income_time, by =c("year")) %>% 
+  filter(race %in% c("White Alone", "Black Alone", "Hispanic")) %>% 
+  mutate(ordered = fct_reorder(income_quintile,
+                               income_dollars,
+                               .desc = FALSE)) %>% 
+  ggplot() +
+  geom_boxplot(aes(x = ordered,
+             y = income_dollars,
+             fill = race)) + 
+  scale_y_continuous(limits = c(0,200000), expand = c(0, 0),labels=scales::dollar_format()) + 
+  labs(title = "Income limits based on racial groups",
+       x = "",
+       y = "",
+       fill = "") + 
+  scale_fill_manual(values = c("#9370DB","#6495ED", "#40E0D0")) + 
+  theme_minimal()
+```
+
+
+
+
+## 4) Average Family Liquid Retirement Savings from 1986-2016
 
 ```{r, echo=FALSE}
 race_wealth %>%   
@@ -134,51 +232,10 @@ race_wealth %>%
   facet_wrap(vars(race))
 ```
 
-Donec ullamcorper, mi vel hendrerit lacinia, mauris elit malesuada est, vitae tincidunt sem mi vel velit. Cras eu nulla id felis mollis tincidunt. Nullam nulla neque, mollis eu condimentum sed, pellentesque quis urna. Aenean blandit massa ut varius vestibulum. Aenean dictum eros id risus tristique, quis congue sapien porta. Fusce euismod felis nec pretium iaculis. Phasellus id elit sed nunc pulvinar tempor. Suspendisse potenti.
-
-Sed id nisi arcu. Vivamus viverra rutrum libero, sed dictum leo consectetur sit amet. Ut blandit tristique purus id convallis. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Sed imperdiet ante in diam hendrerit varius. Mauris tincidunt orci libero, in bibendum lacus iaculis sit amet. Ut feugiat felis id imperdiet lobortis. Donec eu laoreet ex, ac ultricies erat. Vestibulum ante nulla, convallis ac metus sit amet, posuere fringilla sapien. 
-
-```{r, echo=FALSE}
-student_debt %>% 
-  ggplot(aes(x = year, y = loan_debt, color = race)) +
-  geom_line() +
-  scale_color_manual(values = c("#9370DB","#6495ED", "#40E0D0")) + 
-  scale_y_continuous(limits = c(0, 18000), expand = c(0, 0),labels=scales::dollar_format()) + 
-  labs(title = "Student Loan Debt Based on Racial Groups",
-       caption = "Author: Chloe Nance",
-       x="",
-       y="",
-       color = "") + 
-  theme_minimal()
-```
-Quisque ultricies scelerisque turpis, vitae fringilla mauris condimentum quis. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Pellentesque sodales vulputate ultrices. Maecenas dapibus, sem interdum ornare tempor, risus ligula pulvinar lectus, eget rutrum nulla diam a velit. Phasellus ac iaculis ligula, a convallis tortor. Donec pharetra dui sit amet ex commodo dapibus. Morbi eget laoreet erat. Morbi purus magna, blandit sit amet placerat vitae, aliquet id lectus. Aliquam ultrices magna lectus, vel vestibulum magna luctus non. Suspendisse eu ante at augue ornare porttitor. Sed facilisis, magna venenatis hendrerit molestie, nisl massa iaculis lorem, ac pretium est lectus lacinia risus.
-
-
-```{r, echo = FALSE}
-income_limits %>%  
-  left_join(income_time, by =c("year")) %>% 
-  filter(race %in% c("White Alone", "Black Alone", "Hispanic")) %>% 
-  mutate(ordered = fct_reorder(income_quintile,
-                               income_dollars,
-                               .desc = FALSE)) %>% 
-  ggplot() +
-  geom_boxplot(aes(x = ordered,
-             y = income_dollars,
-             fill = race)) + 
-  scale_y_continuous(limits = c(0,200000), expand = c(0, 0),labels=scales::dollar_format()) + 
-  labs(title = "Income limits based on racial groups",
-       x = "",
-       y = "",
-       fill = "") + 
-  scale_fill_manual(values = c("#9370DB","#6495ED", "#40E0D0")) + 
-  theme_minimal()
-```
 
 
 
-Referring to Kate's patchwork graphs on student loan debt and enrollment based on racial groups, this graph shows that even though White students have a higher enrollment rate and have roughly the same amount of student loan debt, they nonetheless have significantly higher retirement savings. This is likely due to the wage gap in racial groups and the employment rate for people of color in higher paying positions. 
-
-
+## 5) Home ownership by racial group
 
 ```{r, echo = FALSE}
 home_owner %>%
