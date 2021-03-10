@@ -121,6 +121,7 @@ home_owner %>%
        color = "") +
   geom_label(data = home_owner %>%
                filter(year == 2015)) + 
+  theme(legend.position = "none") +
   scale_y_continuous(labels=scales::percent_format()) +
   scale_color_manual(values = c("#9370DB","#6495ED", "#40E0D0"))
 ```
