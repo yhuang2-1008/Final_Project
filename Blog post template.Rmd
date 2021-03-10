@@ -77,6 +77,7 @@ tuition_cost %>%
   group_by(state) %>% 
   summarise(in_state_avg = mean(in_state_total)) %>%
   left_join(state_center, by = "state") %>% 
+  filter(state != c("alaska")) %>% 
   ggplot() +
   geom_map(map = states_map,
            aes(map_id = state,
@@ -112,7 +113,7 @@ tuition_cost %>%
   group_by(state) %>% 
   summarise(out_state_avg = mean(out_of_state_total)) %>% 
   left_join(state_center, by = "state") %>% 
-  filter(state != c("Alaska", "Hawaii")) %>% 
+  filter(state != c("alaska")) %>% 
   ggplot() +
   geom_map(map = states_map,
            aes(map_id = state,
@@ -132,6 +133,36 @@ tuition_cost %>%
   theme(plot.title = element_text(face = "bold", hjust = .5, size = 15),
         plot.caption = element_text(face = "bold", size = 9),
         legend.title = element_text(face = "bold"))
+```
+
+
+
+```{r, echo = FALSE}
+states_map <- map_data("state")
+
+options(scipen=10000)
+
+diversity_school %>%
+  mutate(state = str_to_lower(state)) %>% 
+  group_by(state) %>% 
+  filter(category %in% c("Black", "White", "Hispanic", "Total Minority")) %>% 
+  ggplot() +
+  geom_map(map = states_map,
+           aes(map_id = state,
+               fill = enrollment)) +
+  expand_limits(x = states_map$long, y = states_map$lat) + 
+  scale_fill_viridis_c(option = "inferno") +
+  labs(title = "Diversity enrollment in US colleges",
+       caption = "Author: Chloe Nance",
+       fill = "Enrollment") +
+  facet_wrap(~category) +
+  theme_map() +
+  theme(plot.title = element_text(face = "bold", hjust = .5, size = 15),
+        plot.caption = element_text(face = "bold", size = 9),
+        legend.title = element_text(face = "bold"),
+        legend.box.background = element_rect(),
+        legend.box.margin = margin(6, 6, 6, 6),
+        legend.position = "right")
 ```
 
 
