@@ -156,7 +156,7 @@ student_debt %>%
 Quisque ultricies scelerisque turpis, vitae fringilla mauris condimentum quis. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Pellentesque sodales vulputate ultrices. Maecenas dapibus, sem interdum ornare tempor, risus ligula pulvinar lectus, eget rutrum nulla diam a velit. Phasellus ac iaculis ligula, a convallis tortor. Donec pharetra dui sit amet ex commodo dapibus. Morbi eget laoreet erat. Morbi purus magna, blandit sit amet placerat vitae, aliquet id lectus. Aliquam ultrices magna lectus, vel vestibulum magna luctus non. Suspendisse eu ante at augue ornare porttitor. Sed facilisis, magna venenatis hendrerit molestie, nisl massa iaculis lorem, ac pretium est lectus lacinia risus.
 
 
-```{r}
+```{r, echo = FALSE}
 income_limits %>%  
   left_join(income_time, by =c("year")) %>% 
   filter(race %in% c("White Alone", "Black Alone", "Hispanic")) %>% 
@@ -182,7 +182,7 @@ Referring to Kate's patchwork graphs on student loan debt and enrollment based o
 
 
 
-```{r}
+```{r, echo = FALSE}
 home_owner %>%
   ggplot(aes(x = year,
              y = home_owner_pct,
