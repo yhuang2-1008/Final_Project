@@ -150,7 +150,8 @@ student_debt %>%
        caption = "Author: Chloe Nance",
        x="",
        y="",
-       color = "")
+       color = "") + 
+  theme_minimal()
 ```
 Quisque ultricies scelerisque turpis, vitae fringilla mauris condimentum quis. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Pellentesque sodales vulputate ultrices. Maecenas dapibus, sem interdum ornare tempor, risus ligula pulvinar lectus, eget rutrum nulla diam a velit. Phasellus ac iaculis ligula, a convallis tortor. Donec pharetra dui sit amet ex commodo dapibus. Morbi eget laoreet erat. Morbi purus magna, blandit sit amet placerat vitae, aliquet id lectus. Aliquam ultrices magna lectus, vel vestibulum magna luctus non. Suspendisse eu ante at augue ornare porttitor. Sed facilisis, magna venenatis hendrerit molestie, nisl massa iaculis lorem, ac pretium est lectus lacinia risus.
 
@@ -171,7 +172,8 @@ income_limits %>%
        x = "",
        y = "",
        fill = "") + 
-  scale_fill_manual(values = c("#9370DB","#6495ED", "#40E0D0"))
+  scale_fill_manual(values = c("#9370DB","#6495ED", "#40E0D0")) + 
+  theme_minimal()
 ```
 
 
