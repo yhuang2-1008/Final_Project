@@ -79,7 +79,35 @@ student_debt %>%
        color = "Race") 
 ```
 
-* Referring to Kate's patchwork graphs on student loan debt and enrollment based on racial groups, this graph shows that even though White students have a higher enrollment rate and have roughly the same amount of student loan debt, they nonetheless have significantly higher retirement savings. This is likely due to the wage gap in racial groups and the employment rate for people of color in higher paying positions. 
+
+
+```{r, echo=FALSE}
+race_wealth %>%   
+  filter(year >= "1989", race !="Non-White",type=="Median") %>% 
+  left_join(retirement, by =c("race","year")) %>% 
+  ggplot(aes(x= year,
+             y= retirement,
+             fill=race))+
+  geom_histogram(stat = "identity")+
+  geom_line(aes(y=wealth_family))+
+  scale_x_continuous(limits = c(1989,2017), expand = c(0, 0)) +
+  scale_y_continuous(limits = c(0,200000), expand = c(0, 0),labels=scales::dollar_format())+
+  scale_fill_manual(values = c("#6941e1","#4169e1", "#41b9e1"))+
+  labs(title = "Average Family Liquid Retirement Savings from 1986-2016",
+       subtitle = "Line represents median family wealth",
+       caption = "Author: Cynthia Aguilar",
+       x="",
+       y="") +
+  theme_minimal() +
+  theme(plot.title.position = "plot",
+        legend.position = "none") +
+  facet_wrap(vars(race)) + 
+  theme(plot.title = element_text(face = "bold", hjust = .5, size = 15),
+        plot.subtitle = element_text(hjust = .5, size = 9),
+        plot.caption = element_text(face = "bold", size = 9),
+        legend.title = element_text(face = "bold"))
+```
+
 
 
 ```{r}

@@ -275,6 +275,7 @@ race_wealth %>%
         legend.position = "none") +
   facet_wrap(vars(race)) + 
   theme(plot.title = element_text(face = "bold", hjust = .5, size = 15),
+        plot.subtitle = element_text(hjust = .5, size = 9),
         plot.caption = element_text(face = "bold", size = 9),
         legend.title = element_text(face = "bold"))
 ```
