@@ -66,6 +66,7 @@ tuition_cost %>%
   group_by(state) %>% 
   summarise(in_state_avg = mean(in_state_total)) %>%
   left_join(state_center, by = "state") %>% 
+  filter(state != "alaska") %>% 
   ggplot() +
   geom_map(map = states_map,
            aes(map_id = state,
@@ -100,7 +101,7 @@ tuition_cost %>%
   group_by(state) %>% 
   summarise(out_state_avg = mean(out_of_state_total)) %>% 
   left_join(state_center, by = "state") %>% 
-  filter(state != c("Alaska", "Hawaii")) %>% 
+  filter(state != "alaska") %>% 
   ggplot() +
   geom_map(map = states_map,
            aes(map_id = state,
