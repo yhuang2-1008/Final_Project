@@ -63,6 +63,11 @@ income_limits <- readr::read_csv('https://raw.githubusercontent.com/rfordatascie
 ```
 
 
+## Introduction
+In 2017, the Urban Institute released data regarding wealth inequality in the United States. Their data delineated the increase in wealth inequality from 1986 to 2016. Across factors such as student loan debt and homeownership the wealth gap between Black and Hispanic families when compared to White families had bettered little over the years. This project incorporates historical income tables provided by the U.S Census Bureau and Tuitiontacker.org to further explore these disparities in the United States.   
+
+
+
 ## 1) Map of In and Out-of-state College Tuition
 
 ```{r, echo = FALSE}
@@ -184,12 +189,12 @@ debtplot <- student_debt %>%
   theme(legend.position = "none") +
   facet_wrap(~ race) + 
   scale_y_continuous(labels=scales::percent_format()) +
-  scale_fill_manual(values = c("#9370DB","#6495ED", "#40E0D0"))
+  scale_fill_manual(values = c("#9370DB","#6495ED", "#40E0D0")) + 
+  theme(plot.title = element_text(face = "bold", hjust = .5, size = 15),
+        plot.caption = element_text(face = "bold", size = 9),
+        legend.title = element_text(face = "bold"))
 
   
-
-
-
 compplot <- diversity_school %>%
   filter(category %in% c("Black", 
                          "Hispanic", 
@@ -203,10 +208,14 @@ compplot <- diversity_school %>%
   geom_boxplot() + 
   labs(title = "Average proportion of student enrollment by racial groups",
        x = "",
-       y= "") + 
+       y= "",
+       caption = "Author: Kate Seeger") + 
   theme_minimal() +
   theme(legend.position = "none") +
-  scale_fill_manual(values = c("#9370DB","#6495ED", "#40E0D0"))
+  scale_fill_manual(values = c("#9370DB","#6495ED", "#40E0D0")) + 
+  theme(plot.title = element_text(face = "bold", hjust = .5, size = 15),
+        plot.caption = element_text(face = "bold", size = 9),
+        legend.title = element_text(face = "bold"))
 
 
 debtplot/compplot
@@ -231,9 +240,12 @@ income_limits %>%
   labs(title = "Income limits based on racial groups",
        x = "",
        y = "",
-       fill = "") + 
+       fill = "",
+       caption = "Author: Jennifer Huang") + 
   scale_fill_manual(values = c("#9370DB","#6495ED", "#40E0D0")) + 
-  theme_minimal()
+  theme(plot.title = element_text(face = "bold", hjust = .5, size = 15),
+        plot.caption = element_text(face = "bold", size = 9),
+        legend.title = element_text(face = "bold"))
 ```
 
 
@@ -255,13 +267,16 @@ race_wealth %>%
   scale_fill_manual(values = c("#6941e1","#4169e1", "#41b9e1"))+
   labs(title = "Average Family Liquid Retirement Savings from 1986-2016",
        subtitle = "Line represents median family wealth",
-       caption = "Cynthia Aguilar",
+       caption = "Author: Cynthia Aguilar",
        x="",
        y="") +
   theme_minimal() +
   theme(plot.title.position = "plot",
         legend.position = "none") +
-  facet_wrap(vars(race))
+  facet_wrap(vars(race)) + 
+  theme(plot.title = element_text(face = "bold", hjust = .5, size = 15),
+        plot.caption = element_text(face = "bold", size = 9),
+        legend.title = element_text(face = "bold"))
 ```
 
 
@@ -279,9 +294,13 @@ home_owner %>%
   labs(title = "Homeownership by race", 
        x = "",
        y = "",
-       color = "") +
+       color = "",
+       caption = "Author: Kate Seeger") +
   scale_y_continuous(labels=scales::percent_format()) +
-  scale_color_manual(values = c("#9370DB","#6495ED", "#40E0D0"))
+  scale_color_manual(values = c("#9370DB","#6495ED", "#40E0D0")) + 
+  theme(plot.title = element_text(face = "bold", hjust = .5, size = 15),
+        plot.caption = element_text(face = "bold", size = 9),
+        legend.title = element_text(face = "bold"))
 ```
 
 
