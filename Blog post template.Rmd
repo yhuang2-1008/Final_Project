@@ -37,6 +37,7 @@ library(patchwork)
 theme_set(theme_minimal())
 ```
 
+
 ```{r, echo=FALSE}
 # College Tuition Data
 tuition_cost <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-03-10/tuition_cost.csv')
@@ -252,3 +253,7 @@ home_owner %>%
   scale_color_manual(values = c("#9370DB","#6495ED", "#40E0D0"))
 ```
 
+
+
+## Conclusion
+Black and Hispanic people’s varied experiences in double jeopardy is only a tip of the iceberg to the ingrained racism and inequality in the US. The data presented in this blog post does not account for individual differences in socioeconomic status, educational background, neighborhood environment, as well as other racial groups and minority groups. Despite that the analyses set forth in this blog post should be taken with a grain of salt, the overall trend inferred from this data set reflects the present day situation. 
